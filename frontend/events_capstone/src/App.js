@@ -1,16 +1,12 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import LOGINOUTLAYOUT from './components/LOGINOUTLAYOUT';
-import RegistrationForm from './components/registration_form';
+import React from "react";
+import "./App.css";
+import LOGINOUTLAYOUT from "./components/LOGINOUTLAYOUT";
 
 function App() {
   return (
     <React.Fragment>
-    <LOGINOUTLAYOUT/>
+      <LOGINOUTLAYOUT />
     </React.Fragment>
-    
-    
   );
 }
 
