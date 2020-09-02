@@ -1,114 +1,43 @@
-import React, {Component} from 'react';
-import InputField from './loginComponents/InputField';
-import SubmitButton from './loginComponents/SubmitButton';
-import UserStore from './loginComponents/stores/Userstore';
+import React, { useState } from 'react';
+import {useForm} from 'react-hook-form';
+import { values } from 'mobx';
+import RegistrationForm from './registration_form';
 
-class LoginForm extends Component {
+
+const LoginForm = ()=>{
     
-    constructor(props){
-        super(props);
-        this.state = {
-            email: '',
-            password: '',
-            buttonDisabled:false
-        }
-    }
+    const {register, handleSubmit, errors} = useForm();
+    const [choice, setChoice] = useState('');
 
-    setInputValue(property, val){
-        val = val.trim();
-        this.setState({
-            [property]: val
-        })
-    }
+    // compare login data with data from api
+    const displayData = data => console.log(data);
 
-    //Function to reset the form incase of error
-    resetForm(){
-        this.setState({
-            email:'',
-            password:'',
-            buttonDisabled: false
-        })
-    }
+    const registaHandler = ()=> setChoice('regista');
 
-    //function to to login
-    async doLogin(){
-        if (!this.state.email){
-            return;
-        }
-        if (!this.state.password){
-            return;
-        }
-        this.setState({
-            buttonDisabled:true
-        })
+    const form = <div>
+                    <h1>LOGIN</h1>
+                    <form onSubmit={handleSubmit(displayData)}>
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Email" ref={register({required:true})}/> 
+                    {errors.email && <span>Email Required</span>} <br/>
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Password" ref={register({required:true, minLength:3})}/> 
+                    {errors.password && <span>Password Required</span>} <br/>
+                    <button type="submit">Login</button>
+                    </form>
+                    <button onClick={registaHandler}>Register</button>
+                 </div>;
 
-        /**
-         * API for the Login
-         */
-        try {
-            let res = await fetch('./login',{
-                method: 'post',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: this.state.email,
-                    password: this.state.password
-                })
-            });
+    const regista = <RegistrationForm/>;
 
-            let result = await res.json();
-
-            if (result && result.success){
-                UserStore.isLoggedIn = true;
-                UserStore.email = result.email;
-            }
-            else if  (result && result.success === false){
-                this.resetForm();
-                alert(result.msg);
-            }
-        }
-        catch(e){
-            console.log(e);
-            this.resetForm();
-        }
-    }
-
-    
-  render(){
-    return (
-        <>
-        <form>
-        <div className="loginForm">
-          Sign in to your account
-         <br />
-         <br />
-            Your email
-            <InputField 
-            type = 'email'
-            placeholder='Email'
-            value={this.state.email ? this.state.email : ''}
-            onChange={(val)=>this.setInputValue('email', val)}
-            />
-            Password
-            <InputField 
-            type = 'password'
-            placeholder='Password'
-            value={this.state.password ? this.state.password : ''}
-            onChange={(val)=>this.setInputValue('password', val)}
-            />
-            <SubmitButton
-            text='Sign in to your accounts'
-            disable={this.state.buttonDisabled}
-            onClick={()=>this.doLogin()}
-            /> 
-      </div>
-        </form>
-     
-      
-      </>
+    return(
+        <div>
+           {choice==='' ? form : regista}
+        </div>
     );
-  }
 }
+
+
 export default LoginForm;
+
+//LoginForm
