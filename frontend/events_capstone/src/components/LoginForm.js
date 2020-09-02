@@ -102,10 +102,7 @@ class LoginForm extends Component {
             text='Sign in to your accounts'
             disable={this.state.buttonDisabled}
             onClick={()=>this.doLogin()}
-            />
-
-          
-          
+            /> 
       </div>
         </form>
      
