@@ -72,8 +72,7 @@ const MainForm = () => {
 
         <label>Phone Number</label>
         <input name="phoneNumber" ref={register({ require: true })} />
-        {/*
-    message: "invalid phone number"} */}
+        {/* message: "invalid phone number"} */}
 
         <label>City</label>
         <select name="city" ref={register({ require: true })}>
@@ -105,9 +104,9 @@ const MainForm = () => {
 class RegistrationForm extends Component {
   render() {
     return (
-      <div>
+      <>
         <MainForm />
-      </div>
+      </>
     );
   }
 }
