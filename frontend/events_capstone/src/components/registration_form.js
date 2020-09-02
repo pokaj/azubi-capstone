@@ -33,12 +33,12 @@ const MainForm = () => {
         <h1>Registration</h1>
         <label>First Name:</label>
         <input name="firstName" ref={register({require:true, min:2})} />
-        {/* {error.firstName && error.firstName.type === "require" && <p>This is required</p>}
+        {/* 
         {error.firstName && error.firstName.type === "min" && <p>You need a minimum of 2 characters</p>} */}
 
         <label>Last Name:</label>
         <input name="lastName" ref={register({require:true, min:2})}/>
-        {/* {error.lastName && error.lastName.type === "require" && <p>This is required</p>}
+        {/* 
         {error.lastName && error.lastName.type === "min" && <p>You need a minimum of 2 characters</p>} */}
 
         <label>Email</label>
@@ -58,13 +58,13 @@ const MainForm = () => {
 
         <label>Address</label>
         <input name="address" ref={register({require:true, min:4})}/>
-        {/* {error.address && error.address.type === "require" && <p>This is required</p>}
+        {/* 
         {error.address && error.address.type === "min" && <p>You need a minimum of 4 characters for an address</p>} */}
 
 
         <label>Phone Number</label>
         <input name="phoneNumber" ref={register({require:true,})}/> 
-        {/* pattern:{value: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/i,
+        {/* 
         message: "invalid phone number"} */}
 
         <label>City</label>
@@ -74,13 +74,12 @@ const MainForm = () => {
           <option value="accra">Accra</option>
           <option value="kumasi">kumasi</option>
         </select>
-        {/* {error.city && error.city.type === "require" && <p>This is required</p>} */}
 
 
         <span>
           <input type="checkbox" name="terms" ref={register({require:true,validator:accepted=> this.event.target.checked})}/>
           <label>I agree with the terms and conditions.</label>
-        {/* {error.city && error.city.type === "require" && <p>You need to accept the terms and conditions to proceed</p>} */}
+        {/* {error.checkbox && error.city.type === "require" && <p>You need to accept the terms and conditions to proceed</p>} */}
 
         </span>
 
