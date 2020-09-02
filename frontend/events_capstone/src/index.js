@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import LOGINOUTLAYOUT from './components/LOGINOUTLAYOUT';
 
 ReactDOM.render(
   <React.StrictMode>
-    <LOGINOUTLAYOUT />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

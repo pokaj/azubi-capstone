@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import LoginForm from './LoginForm';
+import RegistrationForm from './registration_form';
 
 const LOGINOUTLAYOUT = ()=>{
 
@@ -49,7 +51,7 @@ const LOGIN = ()=>{
 
     return(
         <div>
-        <h1>LOGIN</h1>
+        <LoginForm/>
         </div>
     );
 }
@@ -58,7 +60,7 @@ const Register = ()=>{
 
 return(
     <div>
-    <h1>Register</h1>
+      <RegistrationForm/>
     </div>
 );
 }
