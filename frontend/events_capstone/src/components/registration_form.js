@@ -6,7 +6,7 @@ import useForm from "react-hook-form";
 
 //registration function component
 export default function registrationForm() {
-  //destructuring feature methods from useForm - "react-use-form"
+  //destructuring feature methods from useForm() - "react-use-form"
   const { register, handleSubmit, error } = useForm();
 
   //function to handle form submission
@@ -24,12 +24,10 @@ export default function registrationForm() {
         {error.firstName && error.firstName.type === "required" && <p>This is required</p>}
         {error.firstName && error.firstName.type === "min" && <p>You need a minimum of 2 characters</p>}
 
-
         <label>Last Name:</label>
         <input name="lastName" ref={register({require=true, min=2})}/>
         {error.lastName && error.lastName.type === "required" && <p>This is required</p>}
         {error.lastName && error.lastName.type === "min" && <p>You need a minimum of 2 characters</p>}
-
 
         <label>Email</label>
         <input name="email" ref={register({require=true,pattern: {
@@ -49,7 +47,6 @@ export default function registrationForm() {
         <input name="address" ref={register({require=true, min=4})}/>
         {error.address && error.address.type === "required" && <p>This is required</p>}
         {error.address && error.address.type === "min" && <p>You need a minimum of 4 characters for an address</p>}
-
 
 
         <label>Phone Number</label>
