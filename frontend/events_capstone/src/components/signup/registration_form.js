@@ -4,6 +4,9 @@
 import React, { Component } from "react";
 import { useForm } from "react-hook-form";
 
+//module imports
+import "./styles.css";
+
 //registration function component
 const MainForm = () => {
   //destructuring feature methods from useForm() - "react-use-form"
@@ -17,7 +20,7 @@ const MainForm = () => {
   return (
     <>
       {/* registration form */}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="App" onSubmit={handleSubmit(onSubmit)}>
         <h1>Registration</h1>
         <label>First Name:</label>
         <input name="firstName" ref={register({ require: true, min: 2 })} />
