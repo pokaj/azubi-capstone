@@ -60,7 +60,7 @@ const Register = ()=>{
 
 return(
     <div>
-    <registrationForm/>
+      {/*<registrationForm/>*/}
     </div>
 );
 }

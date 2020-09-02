@@ -2,10 +2,10 @@
 
 //import dependencies
 import react from "react";
-import useForm from "react-hook-form";
+import {useForm} from "react-hook-form";
 
 //registration function component
-export default function registrationForm() {
+const registrationForm =() => {
   //destructuring feature methods from useForm - "react-use-form"
   const { register, handleSubmit, error } = useForm();
 
@@ -15,45 +15,45 @@ export default function registrationForm() {
   };
 
   return (
-    <>
+    <div>
       {/* registration form */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <h1>Registration</h1>
         <label>First Name:</label>
-        <input name="firstName" ref={register({require=true, min=2})}/>
+        <input name="firstName" ref={register({required:true, min:2})}/>
         {error.firstName && error.firstName.type === "required" && <p>This is required</p>}
         {error.firstName && error.firstName.type === "min" && <p>You need a minimum of 2 characters</p>}
 
 
         <label>Last Name:</label>
-        <input name="lastName" ref={register({require=true, min=2})}/>
+        <input name="lastName" ref={register({required:true, min:2})}/>
         {error.lastName && error.lastName.type === "required" && <p>This is required</p>}
         {error.lastName && error.lastName.type === "min" && <p>You need a minimum of 2 characters</p>}
 
 
         <label>Email</label>
-        <input name="email" ref={register({require=true,pattern: {
+        <input name="email" ref={register({required:true,pattern: {
             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
             message: "invalid email address"
           }})}/>
 
         <label>Password</label>
-        <input name="password" ref={register({require=true, pattern:{
+        <input name="password" ref={register({required:true, pattern:{
             value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{3,})/i,message:"invalid password"
         }})}/>
 
         <label>Confirm Password</label>
-        <input name="confirmPassword" ref={register({require=true, validate: (value) => value === watch('password') || "Passwords don't match." })}/>
+        <input name="confirmPassword" ref={register({required:true, validate: (value) => value === watch('password') || "Passwords don't match." })}/>
 
         <label>Address</label>
-        <input name="address" ref={register({require=true, min=4})}/>
+        <input name="address" ref={register({required:true, min:4})}/>
         {error.address && error.address.type === "required" && <p>This is required</p>}
         {error.address && error.address.type === "min" && <p>You need a minimum of 4 characters for an address</p>}
 
 
 
         <label>Phone Number</label>
-        <input name="phoneNumber" ref={register({require=true, pattern:{value: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/i,
+        <input name="phoneNumber" ref={register({required:true, pattern:{value: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/i,
         message: "invalid phone number"}})}/>
 
         <label>City</label>
@@ -67,7 +67,7 @@ export default function registrationForm() {
 
 
         <span>
-          <input type="checkbox" name="terms" ref={register({require=true,validator:accepted=> event.target.checked})}/>
+          <input type="checkbox" name="terms" ref={register({required:true,validator:accepted=> event.target.checked})}/>
           <label>I agree with the terms and conditions.</label>
         {error.city && error.city.type === "required" && <p>You need to accept the terms and conditions to proceed</p>}
 
@@ -75,6 +75,8 @@ export default function registrationForm() {
 
         <input type="submit" placeholder="Create Account" />
       </form>
-    </>
+    </div>
   );
 }
+
+export default registrationForm;
