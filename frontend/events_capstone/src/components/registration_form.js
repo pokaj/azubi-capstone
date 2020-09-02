@@ -1,19 +1,16 @@
 //Event registration app registration component
 
 //import dependencies
-import react from "react";
+import React, {Component} from "react";
 import {useForm} from "react-hook-form";
 
-//registration function component
-const registrationForm =() => {
-  //destructuring feature methods from useForm - "react-use-form"
-  const { register, handleSubmit, error } = useForm();
-
-  //function to handle form submission
+const MainForm = () => {
+   //destructuring feature methods from useForm - "react-use-form"
+   const { register, handleSubmit, error } = useForm();
+   //function to handle form submission
   const onSubmit = (formData) => {
     console.log(formData);
   };
-
   return (
     <div>
       {/* registration form */}
@@ -43,7 +40,7 @@ const registrationForm =() => {
         }})}/>
 
         <label>Confirm Password</label>
-        <input name="confirmPassword" ref={register({required:true, validate: (value) => value === watch('password') || "Passwords don't match." })}/>
+        <input name="confirmPassword" ref={register({required:true, validate: (value) => value === this.watch('password') || "Passwords don't match." })}/>
 
         <label>Address</label>
         <input name="address" ref={register({required:true, min:4})}/>
@@ -67,7 +64,7 @@ const registrationForm =() => {
 
 
         <span>
-          <input type="checkbox" name="terms" ref={register({required:true,validator:accepted=> event.target.checked})}/>
+          <input type="checkbox" name="terms" ref={register({required:true,validator:accepted=> this.event.target.checked})}/>
           <label>I agree with the terms and conditions.</label>
         {error.city && error.city.type === "required" && <p>You need to accept the terms and conditions to proceed</p>}
 
@@ -79,4 +76,25 @@ const registrationForm =() => {
   );
 }
 
-export default registrationForm;
+//registration function component
+class RegistrationForm extends Component{
+  //destructuring feature methods from useForm - "react-use-form"
+  // const { register, handleSubmit, error } = useForm();
+
+  // //function to handle form submission
+  // const onSubmit = (formData) => {
+  //   console.log(formData);
+  // };
+
+  render(){
+
+  return(
+    <div>
+        <MainForm />
+    </div>
+  );
+    
+    }
+}
+
+export default RegistrationForm;
