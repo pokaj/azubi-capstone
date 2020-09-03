@@ -1,108 +1,74 @@
-import React, { Component } from "react";
-import InputField from "./loginComponents/InputField";
-import SubmitButton from "./loginComponents/SubmitButton";
-import UserStore from "./loginComponents/stores/Userstore";
+import React, {useState} from "react";
+import { useForm } from "react-hook-form";
+import RegistrationForm from "./signup/registration_form";
 
-class LoginForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-      buttonDisabled: false,
-    };
-  }
+const LoginForm = (props)=>{
+    const{register, handleSubmit, errors} = useForm();
+    const [choice, setChoice] = useState('');
+    const regHandler = ()=>setChoice('reg');
 
-  setInputValue(property, val) {
-    val = val.trim();
-    this.setState({
-      [property]: val,
-    });
-  }
+    const doLogin = ()=>{
 
-  //Function to reset the form incase of error
-  resetForm() {
-    this.setState({
-      email: "",
-      password: "",
-      buttonDisabled: false,
-    });
-  }
+        /**
+         * API for the Login
+         */
+        try {
+            
 
-  //function to to login
-  async doLogin() {
-    if (!this.state.email) {
-      return;
+            }
+        
+        catch(e){
+            
+        }
     }
-    if (!this.state.password) {
-      return;
-    }
-    this.setState({
-      buttonDisabled: true,
-    });
-
-    /**
-     * API for the Login
-     */
-    try {
-      let res = await fetch("./login", {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: this.state.email,
-          password: this.state.password,
-        }),
-      });
-
-      let result = await res.json();
-
-      if (result && result.success) {
-        UserStore.isLoggedIn = true;
-        UserStore.email = result.email;
-      } else if (result && result.success === false) {
-        this.resetForm();
-        alert(result.msg);
-      }
-    } catch (e) {
-      console.log(e);
-      this.resetForm();
-    }
-  }
-
-  render() {
-    return (
-      <>
-        <form>
-          <div className="loginForm">
-            Sign in to your account
+    const form = <div className="form">
+        <form  onSubmit={handleSubmit({doLogin})}>
+        <div className="loginForm">
+          <h1>Sign in to your account</h1>
+         <br />
+         <br />
+            <label>Your email</label><br/>
+            <input
+            type = 'email'
+            placeholder='Email'
+            name='email'
+            ref={register({required:true})}
+            />
+            {errors.password && <span >email required</span>}
+            <label>Password</label>
+            <input 
+            type = 'password'
+            placeholder='Password'
+            name='password'
+            ref={register({required:true})}
+            /><br/>
+            {errors.password && <span >password required</span>}
+            <button
+            type = 'submit'
+            >
+                Sign in to your accounts
+            </button>
             <br />
             <br />
-            Your email
-            <InputField
-              type="email"
-              placeholder="Email"
-              value={this.state.email ? this.state.email : ""}
-              onChange={(val) => this.setInputValue("email", val)}
-            />
-            Password
-            <InputField
-              type="password"
-              placeholder="Password"
-              value={this.state.password ? this.state.password : ""}
-              onChange={(val) => this.setInputValue("password", val)}
-            />
-            <SubmitButton
-              text="Sign in to your accounts"
-              disable={this.state.buttonDisabled}
-              onClick={() => this.doLogin()}
-            />
-          </div>
+            <hr />
+            <a
+            href='#'
+            onClick={regHandler}>
+                Sign UP
+            </a>
+           
+      </div>
         </form>
-      </>
-    );
-  }
+     
+      
+    </div>
+const reg = <RegistrationForm />
+    return(
+        <div>
+    {(choice==="" ? form : reg)}
+        </div>
+        
+        
+    )
 }
 export default LoginForm;
