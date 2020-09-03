@@ -66,7 +66,7 @@ input[type="submit"] {
   padding: 20px;
   font-size: 16px;
   font-weight: 100;
-  letter-spacing: 10px;
+  letter-spacing: 5px;
 }
 
 button[type="submit"]:hover,
@@ -126,4 +126,19 @@ button {
   text-transform: uppercase;
   padding: 10px 20px;
   border-radius: 4px;
+}
+select {
+  display: block;
+}
+.checkbox {
+  display: inline-block;
+  align-content: center;
+}
+.checkbox input {
+  width: 20px;
+  margin-left: 0;
+  padding-left: 0;
+}
+span {
+  display: flex;
 }
