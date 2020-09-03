@@ -18,9 +18,25 @@ const MainForm = () => {
   password.current = watch("password", "");
 
   //function to handle form submission
-  const onSubmit = (data) => {
-    alert(JSON.stringify(data));
-    console.log(data);
+  const onSubmit = async (data) => {
+    console.log("The data is:", data);
+
+    let url = "http://localhost:8000/api/register/";
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("success", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
@@ -30,24 +46,24 @@ const MainForm = () => {
         <h1>Registration</h1>
         <label>First Name:</label>
         <input
-          name="firstName"
+          name="first_name"
           ref={register({ required: true, minLength: 2 })}
         />
-        <ErrorMessage error={errors.firstName} />
+        <ErrorMessage error={errors.first_name} />
 
         <label>Last Name:</label>
         <input
-          name="lastName"
+          name="last_name"
           ref={register({ required: true, minLength: 2 })}
         />
-        <ErrorMessage error={errors.lastName} />
+        <ErrorMessage error={errors.last_name} />
 
         <label>User Name:</label>
         <input
-          name="userName"
+          name="username"
           ref={register({ required: true, minLength: 2 })}
         />
-        <ErrorMessage error={errors.userName} />
+        <ErrorMessage error={errors.username} />
 
         <label>Email</label>
         <input

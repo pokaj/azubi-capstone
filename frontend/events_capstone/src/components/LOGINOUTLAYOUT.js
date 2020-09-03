@@ -18,7 +18,7 @@ const WELCOMECOMPONENT = () => {
   const logInHandler = () => setChoice("LOGIN");
   const logRegisterHandler = () => setChoice("REGISTER");
   const welcome = (
-    <div>
+    <>
       <div>
         <h1>WELCOME TO AZUBI EVENT BOOKING PLATFORM</h1>
       </div>
@@ -30,7 +30,7 @@ const WELCOMECOMPONENT = () => {
           Register
         </button>
       </div>
-    </div>
+    </>
   );
   const login = (
     <div>
@@ -56,7 +56,11 @@ const WELCOMECOMPONENT = () => {
     next = register;
   }
 
-  return <div className="welcome-component">{next}</div>;
+  return (
+    <div className="centerForm">
+      <div className="welcome-component">{next}</div>
+    </div>
+  );
 };
 
 const LOGIN = () => {
