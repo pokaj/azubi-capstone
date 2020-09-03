@@ -42,6 +42,13 @@ const MainForm = () => {
         />
         <ErrorMessage error={errors.lastName} />
 
+        <label>User Name:</label>
+        <input
+          name="userName"
+          ref={register({ required: true, minLength: 2 })}
+        />
+        <ErrorMessage error={errors.userName} />
+
         <label>Email</label>
         <input
           name="email"
@@ -79,33 +86,6 @@ const MainForm = () => {
           })}
         />
         <ErrorMessage error={errors.confirmPassword} />
-
-        <label>Address</label>
-        <input
-          name="address"
-          ref={register({ required: true, minLength: 4 })}
-        />
-        <ErrorMessage error={errors.address} />
-
-        <label>Phone Number</label>
-        <input
-          name="phoneNumber"
-          ref={register({ required: true, minLength: 8 })}
-        />
-        {errors.phoneNumber && <p>You need a minimum of 8 digits</p>}
-
-        <label>City</label>
-        <select
-          name="city"
-          className="options"
-          ref={register({ required: true })}
-        >
-          <option value="">City...</option>
-          <option value="tamale">Tamale</option>
-          <option value="accra">Accra</option>
-          <option value="kumasi">kumasi</option>
-        </select>
-        <ErrorMessage error={errors.city} />
 
         <span>
           <label className="checkbox">
