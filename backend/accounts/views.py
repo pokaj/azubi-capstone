@@ -8,13 +8,12 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib import auth
 
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
-
     def post(self, request, *args, **kwargs):
         try:
             serializer = self.get_serializer(data=request.data)
@@ -37,18 +36,23 @@ class LoginAPI(KnoxLoginView):
     def post(self, request, format=None):
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            if request.user.is_authenticated:
+        if(username == ''):
+            return Response({"message":"username field empty"})
+        if(password == ''):
+            return Response({"message":"password field empty"})
+        user_exist = User.objects.filter(username=username)
+        if(user_exist):
+            user = auth.authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
                 return Response({
-                    "username":user.username,
+                     "username":user.username,
                     "first_name":user.first_name,
                     "last_name":user.last_name,
                     "email":user.email,
                     "token": AuthToken.objects.create(user)[1]
                 })
             else:
-                return Response({"message":"Wrong credentials entered"})
+                return Response({"message":"Invalid credentials entered!"})
         else:
-            return Response({"message":"User does not exist"})
+            return Response({"message":"user not found in database"})
