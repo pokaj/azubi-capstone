@@ -62,10 +62,10 @@ class LoginAPI(KnoxLoginView):
             else:
                 return Response({
                     "status":False,
-                    "message":"Invalid credentials entered!"
+                    "error-message":"Invalid credentials entered!"
                     })
         else:
             return Response({
                 "status":False,
-                "message":"user not found in database"
+                "error-message":"user not found in database"
                 })
