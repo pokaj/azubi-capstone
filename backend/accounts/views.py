@@ -37,22 +37,35 @@ class LoginAPI(KnoxLoginView):
         username = request.POST.get('username')
         password = request.POST.get('password')
         if(username == ''):
-            return Response({"message":"username field empty"})
+            return Response({
+                "status": False,
+                "error-message":"username field empty"
+                })
         if(password == ''):
-            return Response({"message":"password field empty"})
+            return Response({
+                "status":False,
+                "error-message":"password field empty"
+                })
         user_exist = User.objects.filter(username=username)
         if(user_exist):
             user = auth.authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
                 return Response({
-                     "username":user.username,
+                    "status":True,
+                    "username":user.username,
                     "first_name":user.first_name,
                     "last_name":user.last_name,
                     "email":user.email,
                     "token": AuthToken.objects.create(user)[1]
                 })
             else:
-                return Response({"message":"Invalid credentials entered!"})
+                return Response({
+                    "status":False,
+                    "error-message":"Invalid credentials entered!"
+                    })
         else:
-            return Response({"message":"user not found in database"})
+            return Response({
+                "status":False,
+                "error-message":"user not found in database"
+                })
