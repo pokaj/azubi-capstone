@@ -8,21 +8,23 @@ import { useForm } from "react-hook-form";
 import "./styles.css";
 import ErrorMessage from "./errorMessages";
 
-//registration function component
+//registration function component...
 const MainForm = () => {
-  //destructuring feature methods from useForm() - "react-use-form"
+  //destructuring feature methods from useForm() - "react-use-form"...
   const { register, handleSubmit, errors, watch } = useForm();
 
-  //keeping watch for the password form field to make comparison with the confirm password field
+  //keeping watch for the password form field to make comparison with the confirm password field...
   const password = useRef({});
   password.current = watch("password", "");
 
-  //function to handle form submission
+  //function to handle form submission...
   const onSubmit = async (data) => {
     console.log("The data is:", data);
 
+    //url to bacnkend for registration...to be stored in a seperate file as a secrete later...
     let url = "http://localhost:8000/api/register/";
 
+    //method to submit form data and receive reponse data asynchronously
     fetch(url, {
       method: "POST",
       headers: {
@@ -44,11 +46,17 @@ const MainForm = () => {
       {/* registration form */}
       <form className="App" onSubmit={handleSubmit(onSubmit)}>
         <h1>Registration</h1>
+
+        {/* lables along with form fields */}
+
         <label>First Name:</label>
         <input
           name="first_name"
           ref={register({ required: true, minLength: 2 })}
         />
+
+        {/* Error messages to be displayed for their respective fields*/}
+
         <ErrorMessage error={errors.first_name} />
 
         <label>Last Name:</label>
@@ -126,6 +134,7 @@ const MainForm = () => {
   );
 };
 
+//class to render returned form function form
 class RegistrationForm extends Component {
   render() {
     return (
@@ -136,4 +145,5 @@ class RegistrationForm extends Component {
   }
 }
 
+//exporting registrationform logic
 export default RegistrationForm;
