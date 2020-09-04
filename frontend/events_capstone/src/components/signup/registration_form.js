@@ -18,9 +18,25 @@ const MainForm = () => {
   password.current = watch("password", "");
 
   //function to handle form submission
-  const onSubmit = (data) => {
-    alert(JSON.stringify(data));
-    console.log(data);
+  const onSubmit = async (data) => {
+    console.log("The data is:", data);
+
+    let url = "http://localhost:8000/api/register/";
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("success", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
@@ -30,17 +46,24 @@ const MainForm = () => {
         <h1>Registration</h1>
         <label>First Name:</label>
         <input
-          name="firstName"
+          name="first_name"
           ref={register({ required: true, minLength: 2 })}
         />
-        <ErrorMessage error={errors.firstName} />
+        <ErrorMessage error={errors.first_name} />
 
         <label>Last Name:</label>
         <input
-          name="lastName"
+          name="last_name"
           ref={register({ required: true, minLength: 2 })}
         />
-        <ErrorMessage error={errors.lastName} />
+        <ErrorMessage error={errors.last_name} />
+
+        <label>User Name:</label>
+        <input
+          name="username"
+          ref={register({ required: true, minLength: 2 })}
+        />
+        <ErrorMessage error={errors.username} />
 
         <label>Email</label>
         <input
@@ -79,33 +102,6 @@ const MainForm = () => {
           })}
         />
         <ErrorMessage error={errors.confirmPassword} />
-
-        <label>Address</label>
-        <input
-          name="address"
-          ref={register({ required: true, minLength: 4 })}
-        />
-        <ErrorMessage error={errors.address} />
-
-        <label>Phone Number</label>
-        <input
-          name="phoneNumber"
-          ref={register({ required: true, minLength: 8 })}
-        />
-        {errors.phoneNumber && <p>You need a minimum of 8 digits</p>}
-
-        <label>City</label>
-        <select
-          name="city"
-          className="options"
-          ref={register({ required: true })}
-        >
-          <option value="">City...</option>
-          <option value="tamale">Tamale</option>
-          <option value="accra">Accra</option>
-          <option value="kumasi">kumasi</option>
-        </select>
-        <ErrorMessage error={errors.city} />
 
         <span>
           <label className="checkbox">

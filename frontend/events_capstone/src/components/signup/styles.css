@@ -10,7 +10,8 @@ form {
   margin: 0 auto;
 }
 
-h1,h3 {
+h1,
+h3 {
   font-weight: 100;
   color: white;
   text-align: center;
@@ -142,9 +143,9 @@ select {
 span {
   display: flex;
 }
-a{
-  color:#ec5990;
+a {
+  color: #ec5990;
 }
 a:hover {
-  color:#bf1650;
+  color: #bf1650;
 }
