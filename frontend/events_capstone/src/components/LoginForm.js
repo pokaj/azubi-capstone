@@ -47,10 +47,11 @@ const LoginForm = (props) => {
     <div className="form">
       <form onSubmit={handleSubmit(submitForm)}>
         <div className="loginForm">
-          <h1>Sign in to your account</h1>
+          <h1>SIGN IN</h1>
           <br />
           <br />
-          <label>User Name</label>register
+
+          <ErrorMessage error={errors.username} />
           <input
             type="username"
             placeholder="User Name"
@@ -59,26 +60,31 @@ const LoginForm = (props) => {
               required: true,
             })}
           />
-          <ErrorMessage error={errors.username} />
-          <label>Password</label>
+
+          <ErrorMessage error={errors.password} />
           <input
             type="password"
             placeholder="Password"
             name="password"
             ref={register({ required: true })}
           />
-          <ErrorMessage error={errors.password} />
-          <button type="submit">Sign in to your accounts</button>
+
+          <button type="submit">Login</button>
           <br />
           <br />
-          <h3>Don't have an account?</h3>
-          <button onClick={regHandler}>Sign Up</button>
+
+          <p class="message">
+            Not registered?{" "}
+            <a href="#" onClick={regHandler}>
+              Create an account
+            </a>
+          </p>
         </div>
       </form>
     </div>
   );
   const reg = <RegistrationForm />;
-  return <div>{choice === "" ? form : reg}</div>;
+  return <>{choice === "" ? form : reg}</>;
 };
 
 //exporting form logic

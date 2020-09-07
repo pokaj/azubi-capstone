@@ -1,15 +1,20 @@
 //Event registration app registration component
 
 //import dependencies
-import React, { Component, useRef } from "react";
+import React, { Component, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 //module imports
 import "./styles.css";
 import ErrorMessage from "./errorMessages";
+import LoginForm from "../LoginForm";
 
 //registration function component...
 const MainForm = () => {
+  //state hook to handle which form is displayed
+  const [form, setForm] = useState(true);
+  const getForm = () => setForm(!form);
+
   //destructuring feature methods from useForm() - "react-use-form"...
   const { register, handleSubmit, errors, watch } = useForm();
 
@@ -41,17 +46,18 @@ const MainForm = () => {
       });
   };
 
-  return (
+  //variable to hold registration form
+  let registrationForm = (
     <>
       {/* registration form */}
-      <form className="App" onSubmit={handleSubmit(onSubmit)}>
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <h1>Registration</h1>
 
         {/* lables along with form fields */}
 
-        <label>First Name:</label>
         <input
           name="first_name"
+          placeholder="First Name"
           ref={register({ required: true, minLength: 2 })}
         />
 
@@ -59,23 +65,23 @@ const MainForm = () => {
 
         <ErrorMessage error={errors.first_name} />
 
-        <label>Last Name:</label>
         <input
           name="last_name"
+          placeholder="Last Name"
           ref={register({ required: true, minLength: 2 })}
         />
         <ErrorMessage error={errors.last_name} />
 
-        <label>User Name:</label>
         <input
           name="username"
+          placeholder="User Name"
           ref={register({ required: true, minLength: 2 })}
         />
         <ErrorMessage error={errors.username} />
 
-        <label>Email</label>
         <input
           name="email"
+          placeholder="Email"
           ref={register({
             required: true,
             pattern: {
@@ -86,10 +92,10 @@ const MainForm = () => {
         />
         <ErrorMessage error={errors.email} />
 
-        <label>Password</label>
         <input
           name="password"
           type="password"
+          placeholder="Password"
           ref={register({
             required: true,
             pattern: {
@@ -98,11 +104,12 @@ const MainForm = () => {
             },
           })}
         />
+        <ErrorMessage error={errors.password} />
 
-        <label>Confirm Password</label>
         <input
           name="confirmPassword"
           type="password"
+          placeholder="Confirm Password"
           ref={register({
             required: true,
             validate: (value) =>
@@ -111,27 +118,20 @@ const MainForm = () => {
         />
         <ErrorMessage error={errors.confirmPassword} />
 
-        <span>
-          <label className="checkbox">
-            <input
-              type="checkbox"
-              name="terms"
-              ref={register({
-                required: true,
-              })}
-            />
-            I agree with the terms and conditions.
-          </label>
-        </span>
-        {/* <ErrorMessage error={errors.terms} /> */}
-        {errors.terms && (
-          <p>You need to accept the terms and conditions to proceed.</p>
-        )}
-
-        <button type="submit">Confirm Registration</button>
+        <button type="submit" placeholder="Confirm Registration">
+          Sign up
+        </button>
+        <p className="message">
+          Already registered?{" "}
+          <a href="#" onClick={getForm}>
+            Sign In
+          </a>
+        </p>
       </form>
     </>
   );
+
+  return form ? registrationForm : <LoginForm />;
 };
 
 //class to render returned form function form

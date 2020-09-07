@@ -1,11 +1,10 @@
 import React from "react";
 import "./App.css";
-import LOGINOUTLAYOUT from "./components/LOGINOUTLAYOUT";
-
+import LandingPage from "./components/landingPage/landingPage.js";
 function App() {
   return (
     <React.Fragment>
-      <LOGINOUTLAYOUT />
+      <LandingPage />
     </React.Fragment>
   );
 }

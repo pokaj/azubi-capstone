@@ -1,20 +1,23 @@
 import React from "react";
 
 export default function ErrroMessage({ error }) {
+  function getMessage(message) {
+    return <p className="message">{message}</p>;
+  }
+
   if (error) {
     switch (error.type) {
       case "required":
-        return <p>This is required</p>;
+        return getMessage("This is required");
       case "minLength":
-        return <p>Your last name needs a minmium of 2 charcaters</p>;
+        return getMessage("Your last name needs a minmium of 2 charcaters");
       case "pattern":
-        return <p>{error.message}</p>;
+        return getMessage(error.message);
       case "validate":
-        return <p>{error.message}</p>;
+        return getMessage(error.message);
       default:
         return null;
     }
   }
-
   return null;
 }
