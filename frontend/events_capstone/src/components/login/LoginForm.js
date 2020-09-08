@@ -1,10 +1,11 @@
 //import dependencies
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import swal from "sweetalert";
 
 //import modules
-import RegistrationForm from "./signup/registration_form";
-import ErrorMessage from "./signup/errorMessages";
+import RegistrationForm from "../signup/registration_form";
+import ErrorMessage from "../signup/errorMessages";
 
 const LoginForm = (props) => {
   const { register, handleSubmit, errors } = useForm();
@@ -12,7 +13,7 @@ const LoginForm = (props) => {
   const regHandler = () => setChoice("reg");
 
   //function to handle form submission
-  const submitForm = async (data) => {
+  const submitForm = async (data, e) => {
     // variable to hold converted form data
     let formBody = [];
     //loop through received data and convert it into FormData()
@@ -35,9 +36,24 @@ const LoginForm = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success", data);
+        //interactive display on successful/unsuccessful user login
+        if (data.status === true) {
+          e.target.reset();
+          swal("Success", "Login successful", "success");
+        } else {
+          swal(
+            "Error",
+            `unsuccessful login: ${data["error-message"]}`,
+            "warning",
+            {
+              button: "Cancel",
+            }
+          );
+        }
+        // console.log("Success", data);
       })
       .catch((error) => {
+        swal("Error", "Login failure, please retry", "warning");
         console.error("Error:", error);
       });
   };
@@ -73,9 +89,9 @@ const LoginForm = (props) => {
           <br />
           <br />
 
-          <p class="message">
+          <p className="message">
             Not registered?{" "}
-            <a href="#" onClick={regHandler}>
+            <a href="/#" onClick={regHandler}>
               Create an account
             </a>
           </p>

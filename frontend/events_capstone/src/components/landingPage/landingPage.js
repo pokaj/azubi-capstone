@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LoginForm from "../LoginForm";
+import LoginForm from "../login/LoginForm";
 import RegistrationForm from "../signup/registration_form";
 import "./styles.css";
 
@@ -69,7 +69,7 @@ const WELCOMECOMPONENT = () => {
 
 const LOGIN = () => {
   return (
-    <div class="login-page">
+    <div className="login-page">
       <LoginForm />
     </div>
   );

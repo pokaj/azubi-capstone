@@ -7,7 +7,8 @@ import { useForm } from "react-hook-form";
 //module imports
 import "./styles.css";
 import ErrorMessage from "./errorMessages";
-import LoginForm from "../LoginForm";
+import LoginForm from "../login/LoginForm";
+import swal from "sweetalert";
 
 //registration function component...
 const MainForm = () => {
@@ -23,7 +24,7 @@ const MainForm = () => {
   password.current = watch("password", "");
 
   //function to handle form submission...
-  const onSubmit = async (data) => {
+  const onSubmit = async (data, e) => {
     console.log("The data is:", data);
 
     //url to bacnkend for registration...to be stored in a seperate file as a secrete later...
@@ -39,9 +40,33 @@ const MainForm = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        //interactive display on successful/unsuccessful user login
+        if (data.status === true) {
+          e.target.reset();
+          swal(
+            "Success",
+            "You're successfully registered to the Azubi event booking platform",
+            "success"
+          );
+        } else {
+          swal(
+            "Error",
+            `Your registration was unsuccessful: ${data["error-message"]}`,
+            "warning",
+            {
+              button: "Cancel",
+            }
+          );
+        }
+
         console.log("success", data);
       })
       .catch((error) => {
+        swal(
+          "Error",
+          "Your registration was unsuccessful, please retry",
+          "warning"
+        );
         console.error("Error:", error);
       });
   };
@@ -55,6 +80,7 @@ const MainForm = () => {
 
         {/* lables along with form fields */}
 
+        <ErrorMessage error={errors.first_name} />
         <input
           name="first_name"
           placeholder="First Name"
@@ -63,22 +89,21 @@ const MainForm = () => {
 
         {/* Error messages to be displayed for their respective fields*/}
 
-        <ErrorMessage error={errors.first_name} />
-
+        <ErrorMessage error={errors.last_name} />
         <input
           name="last_name"
           placeholder="Last Name"
           ref={register({ required: true, minLength: 2 })}
         />
-        <ErrorMessage error={errors.last_name} />
 
+        <ErrorMessage error={errors.username} />
         <input
           name="username"
           placeholder="User Name"
           ref={register({ required: true, minLength: 2 })}
         />
-        <ErrorMessage error={errors.username} />
 
+        <ErrorMessage error={errors.email} />
         <input
           name="email"
           placeholder="Email"
@@ -90,8 +115,8 @@ const MainForm = () => {
             },
           })}
         />
-        <ErrorMessage error={errors.email} />
 
+        <ErrorMessage error={errors.password} />
         <input
           name="password"
           type="password"
@@ -104,8 +129,8 @@ const MainForm = () => {
             },
           })}
         />
-        <ErrorMessage error={errors.password} />
 
+        <ErrorMessage error={errors.confirmPassword} />
         <input
           name="confirmPassword"
           type="password"
@@ -116,14 +141,13 @@ const MainForm = () => {
               value === password.current || "Passwords do not match.",
           })}
         />
-        <ErrorMessage error={errors.confirmPassword} />
 
         <button type="submit" placeholder="Confirm Registration">
           Sign up
         </button>
         <p className="message">
-          Already registered?{" "}
-          <a href="#" onClick={getForm}>
+          Already registered?
+          <a href="/#" onClick={getForm}>
             Sign In
           </a>
         </p>
