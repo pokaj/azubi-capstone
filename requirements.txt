@@ -1,4 +1,20 @@
-pip install django
-pip install djangorestframework
-pip install django-rest-knox
-pip install django-cors-headers
+asgiref==3.2.10
+astroid==2.4.2
+cffi==1.14.2
+cryptography==3.1
+Django==3.1.1
+django-cors-headers==3.5.0
+django-password-validation==0.1.1
+django-password-validators==1.2.1
+django-rest-knox==4.1.0
+djangorestframework==3.11.1
+isort==5.4.2
+lazy-object-proxy==1.4.3
+mccabe==0.6.1
+pycparser==2.20
+pylint==2.6.0
+pytz==2020.1
+six==1.15.0
+sqlparse==0.3.1
+toml==0.10.1
+wrapt==1.12.1

@@ -15,6 +15,7 @@ from django.views.generic import ListView
 import json
 from django.core import serializers
 from django.http import JsonResponse
+from django.db.models import F
 # Register API
 
 class RegisterAPI(generics.GenericAPIView):
@@ -94,13 +95,11 @@ class attendAPI(generics.GenericAPIView):
             event = Event.objects.get(pk=event_id)
             date = datetime.datetime.now() 
             attendee = User.objects.get(email=user_email)
-            room_capacity = event.room_capacity
-            current_seats = event.current_seat_number
-            if(current_seats < room_capacity):
+            if(event.current_seat_number < event.room_capacity):
                 try:
                     register_seat = EventAttendee.objects.create(event=event, attendee=attendee, date_registered=date)
                     register_seat.save()
-                
+                    Event.objects.filter(id=event.id).update(current_seat_number = F('current_seat_number') + 1)
                     return Response({
                         'status':True,
                         'message':'success'
@@ -113,15 +112,18 @@ class attendAPI(generics.GenericAPIView):
                 
             else:
                 return Response({
-                    'status':'Seats filled up'
+                    'status':'Sorry, all seats have been taken'
                 })
 
 class myeventsAPI(generics.GenericAPIView):
-    serializer_class = EventAttendeesSerializer
+    serializer_class = EventSerializer
 
     def post(self, request, format=None):
         user_email = request.POST.get('email')
         user = User.objects.get(email=user_email)
-        myevents = EventAttendee.objects.filter(attendee=user.id)
+        myevents = EventAttendee.objects.filter(attendee=user)
+        serializer = EventSerializer(myevents)
+        # event_id = serializer.id
+
         # myevents_json = serializers.serialize('json', myevents)
-        return HttpResponse(myevents)
+        return Response(serializer.data)
