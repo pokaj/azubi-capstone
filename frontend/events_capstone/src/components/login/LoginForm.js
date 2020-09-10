@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import swal from "sweetalert";
+import { Redirect } from "react-router";
 
 //import modules
 import RegistrationForm from "../signup/registration_form";
@@ -11,6 +12,12 @@ const LoginForm = (props) => {
   const { register, handleSubmit, errors } = useForm();
   const [choice, setChoice] = useState("");
   const regHandler = () => setChoice("reg");
+
+  const [redirect, setRedirect] = useState({ status: false });
+
+  // const handleRedirect = () => {
+  //   setRedirect({ status: true });
+  // };
 
   //function to handle form submission
   const submitForm = async (data, e) => {
@@ -39,7 +46,10 @@ const LoginForm = (props) => {
         //interactive display on successful/unsuccessful user login
         if (data.status === true) {
           e.target.reset();
-          swal("Success", "Login successful", "success");
+          //redirect to homepage once login is successful
+          swal("Success", "Login successful", "success").then((value) =>
+            setRedirect({ status: value })
+          );
         } else {
           swal(
             "Error",
@@ -104,6 +114,9 @@ const LoginForm = (props) => {
     </div>
   );
   const reg = <RegistrationForm />;
+  //re-routing to homepage after clicking okay on the login alert...
+  if (redirect.status) return <Redirect push to="/sample" />;
+
   return <>{choice === "" ? form : reg}</>;
 };
 
