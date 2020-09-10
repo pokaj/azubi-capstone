@@ -46,11 +46,13 @@ const LoginForm = (props) => {
             `unsuccessful login: ${data["error-message"]}`,
             "warning",
             {
-              button: "Cancel",
+              buttons: {
+                cancel: "Close",
+              },
             }
           );
         }
-        // console.log("Success", data);
+        console.log("Success", data);
       })
       .catch((error) => {
         swal("Error", "Login failure, please retry", "warning");
@@ -60,43 +62,45 @@ const LoginForm = (props) => {
 
   //Form begins here
   const form = (
-    <div className="form">
-      <form onSubmit={handleSubmit(submitForm)}>
-        <div className="loginForm">
-          <h1>SIGN IN</h1>
-          <br />
-          <br />
+    <div className="login-page">
+      <div className="form">
+        <form onSubmit={handleSubmit(submitForm)}>
+          <div className="loginForm">
+            <h1>SIGN IN</h1>
+            <br />
+            <br />
 
-          <ErrorMessage error={errors.username} />
-          <input
-            type="username"
-            placeholder="User Name"
-            name="username"
-            ref={register({
-              required: true,
-            })}
-          />
+            <ErrorMessage error={errors.username} />
+            <input
+              type="username"
+              placeholder="User Name"
+              name="username"
+              ref={register({
+                required: true,
+              })}
+            />
 
-          <ErrorMessage error={errors.password} />
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            ref={register({ required: true })}
-          />
+            <ErrorMessage error={errors.password} />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              ref={register({ required: true })}
+            />
 
-          <button type="submit">Login</button>
-          <br />
-          <br />
+            <button type="submit">Login</button>
+            <br />
+            <br />
 
-          <p className="message">
-            Not registered?{" "}
-            <a href="/#" onClick={regHandler}>
-              Create an account
-            </a>
-          </p>
-        </div>
-      </form>
+            <p className="message">
+              Not registered?{" "}
+              <a href="/#" onClick={regHandler}>
+                Create an account
+              </a>
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
   );
   const reg = <RegistrationForm />;
