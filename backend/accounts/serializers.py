@@ -34,7 +34,14 @@ class EventSerializer(serializers.ModelSerializer):
         'room_capacity', 'date', 'period', 'start_time', 'end_time')
 
 
+# class EventAttendeesSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = EventAttendee
+#         fields = ('id', 'event', 'attendee', 'date_registered')
+
 class EventAttendeesSerializer(serializers.ModelSerializer):
+    event = serializers.StringRelatedField()
+    attendee = serializers.StringRelatedField()
     class Meta:
         model = EventAttendee
-        fields = ('id', 'event', 'attendee', 'date_registered')
+        fields = '__all__'

@@ -12,9 +12,7 @@ from django.contrib import auth
 from .models import Event, EventAttendee
 import datetime
 from django.views.generic import ListView
-import json
 from django.core import serializers
-from django.http import JsonResponse
 from django.db.models import F
 # Register API
 
@@ -86,6 +84,7 @@ class EventView(viewsets.ModelViewSet):
 #     queryset = EventAttendee.objects.all()
 
 class attendAPI(generics.GenericAPIView):
+    serializer_class = EventAttendeesSerializer
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
@@ -116,14 +115,22 @@ class attendAPI(generics.GenericAPIView):
                 })
 
 class myeventsAPI(generics.GenericAPIView):
-    serializer_class = EventSerializer
+    serializer_class = EventAttendeesSerializer
 
     def post(self, request, format=None):
         user_email = request.POST.get('email')
-        user = User.objects.get(email=user_email)
-        myevents = EventAttendee.objects.filter(attendee=user)
-        serializer = EventSerializer(myevents)
-        # event_id = serializer.id
-
-        # myevents_json = serializers.serialize('json', myevents)
-        return Response(serializer.data)
+        if(user_email == ''):
+            return Response({
+                "status":False, 
+                'message':'No email provided'
+                })
+        else:
+            try:
+                myevents = EventAttendee.objects.filter(attendee__email=user_email)
+                serializer = EventAttendeesSerializer(myevents, many=True)
+                return Response(serializer.data)
+            except:
+                return Response({
+                    'status':False,
+                    'message':'An error Occurred'
+                    })
