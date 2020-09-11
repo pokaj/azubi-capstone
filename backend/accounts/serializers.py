@@ -31,7 +31,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ('id', 'name', 'tagline', 'speaker', 'topic', 'location', 
-        'room_capacity', 'date', 'period', 'start_time', 'end_time')
+        'room_capacity', 'current_seat_number', 'image', 'date', 'period', 'start_time', 'end_time')
 
 
 # class EventAttendeesSerializer(serializers.ModelSerializer):

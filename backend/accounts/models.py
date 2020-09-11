@@ -9,6 +9,7 @@ class Event(models.Model):
     location = models.CharField('Location', max_length=100)
     room_capacity = models.IntegerField('Room Capacity')
     current_seat_number = models.IntegerField('Current Seat Number', default=0)
+    image = models.ImageField('Event Image', null=True, blank=True)
     date = models.DateField('Date', null=True)
     period_choices = [('m', 'Morning'),('mm', 'Midmorning'),('a', 'Afternoon')]
     period = models.CharField('Period', choices=period_choices, max_length=50, null=True)
