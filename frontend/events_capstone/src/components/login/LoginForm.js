@@ -115,7 +115,7 @@ const LoginForm = (props) => {
   );
   const reg = <RegistrationForm />;
   //re-routing to homepage after clicking okay on the login alert...
-  if (redirect.status) return <Redirect push to="/sample" />;
+  if (redirect.status) return <Redirect push to="/home" />;
 
   return <>{choice === "" ? form : reg}</>;
 };

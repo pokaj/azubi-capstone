@@ -47,9 +47,7 @@ const MainForm = () => {
             "Success",
             "You're successfully registered to the Azubi event booking platform",
             "success"
-          ).then((value) => {
-            return null;
-          });
+          ).then((value) => getForm());
         } else {
           swal(
             "Error",

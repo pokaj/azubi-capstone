@@ -3,11 +3,11 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import $ from "jquery";
+// import $ from "jquery";
 
-$(".message a").click(function () {
-  $("form").animate({ height: "toggle", opacity: "toggle" }, "slow");
-});
+// $(".message a").click(function () {
+//   $("form").animate({ height: "toggle", opacity: "toggle" }, "slow");
+// });
 
 ReactDOM.render(
   <React.StrictMode>
