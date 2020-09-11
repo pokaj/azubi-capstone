@@ -111,7 +111,8 @@ class attendAPI(generics.GenericAPIView):
                 
             else:
                 return Response({
-                    'status':'Sorry, all seats have been taken'
+                    'status':False,
+                    'message':'Sorry, all seats have been taken'
                 })
 
 class myeventsAPI(generics.GenericAPIView):
