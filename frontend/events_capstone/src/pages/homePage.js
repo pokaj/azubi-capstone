@@ -60,7 +60,7 @@ const Home = ({ cards }) => {
             {cards.length === 0 ? (
               <div>Sorry there are currently no events available...</div>
             ) : (
-              <Row xs={1} sm={2} md={2} xl={5} lg={3}>
+              <Row xs={1} sm={2} md={2} xl={4} lg={3}>
                 {cards.map((event, key) => {
                   return (
                     <div
