@@ -41,7 +41,7 @@ const Styles = styled.div`
     height: 80px;
   }
   .containWidth {
-    width: 90%;
+    width: 100%;
     margin: auto;
   }
 `;
@@ -72,9 +72,10 @@ const Home = ({ cards }) => {
                       <Col>
                         <Card
                           style={{
-                            width: "18rem",
+                            width: "16.5rem",
                             border: 0,
                             marginBottom: "18px",
+                            
                           }}
                           key={key}
                         >
