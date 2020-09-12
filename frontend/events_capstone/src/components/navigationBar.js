@@ -1,7 +1,8 @@
 import React from "react";
 import { Nav, Navbar } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
+
 import Styled from "styled-components";
-import { Link } from "react-router-dom";
 
 const Styles = Styled.div`
 
@@ -26,13 +27,19 @@ const NavigationBar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Item>
-              <NavLink to="/home">Home</NavLink>
+              <NavLink className="nav-link" to="/home">
+                Home
+              </NavLink>
             </Nav.Item>
             <Nav.Item>
-              <NavLink to="/eventsListings">Events Listings</NavLink>
+              <NavLink className="nav-link" to="/eventsListings">
+                Events Listings
+              </NavLink>
             </Nav.Item>
             <Nav.Item>
-              <NavLink to="/eventRegistrationAndEditForm">Add Event</NavLink>
+              <NavLink className="nav-link" to="/eventRegistrationAndEditForm">
+                Add Event
+              </NavLink>
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>

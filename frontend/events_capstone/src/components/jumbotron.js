@@ -8,7 +8,8 @@ const Styles = styled.div`
     background: url(${peopleImage}) no-repeat fixed bottom;
     background-size: cover;
     color: #efefef;
-    height: 200px;
+    height: 250px;
+    margin-bottom: 0;
     position: relative;
     z-index: -2;
   }
@@ -30,7 +31,7 @@ export const Jumbotron = () => (
       <div className="overlay"></div>
       <Container>
         <h1>Welcome</h1>
-        <p>View and register for events</p>
+        <p>Click to register for events</p>
       </Container>
     </Jumbo>
   </Styles>
