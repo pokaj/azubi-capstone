@@ -1,7 +1,7 @@
 import React, { Component, useState } from "react";
 import homeBg from "../assets/images/homeBg.jpg";
 
-import { Container, Card, Col, Row, Modal, Button } from "react-bootstrap";
+import { Container, Card, Col, Row, Modal } from "react-bootstrap";
 import { Jumbotron } from "../components/jumbotron";
 import { useForm } from "react-hook-form";
 
@@ -126,7 +126,7 @@ const Home = ({ cards }) => {
 };
 
 const MyVerticallyCenteredModal = (props) => {
-  const { register, handleSubmit, errors, watch } = useForm();
+  const { register, handleSubmit, errors } = useForm();
 
   let event = { ...props };
   // console.log(`the props are: ${event.eventData.name}`);
