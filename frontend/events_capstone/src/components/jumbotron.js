@@ -5,8 +5,17 @@ import peopleImage from "../assets/images/bg2.jpg";
 
 const Styles = styled.div`
   .jumbo {
-    background: url(${peopleImage}) no-repeat fixed bottom;
-    background-size: cover;
+    // background: url(${peopleImage}) no-repeat fixed bottom;
+    // background-size: cover;
+    background: rgb(6, 6, 6);
+    background: linear-gradient(
+      90deg,
+      rgba(6, 6, 6, 1) 15%,
+      rgba(50, 49, 49, 1) 30%,
+      rgba(148, 144, 144, 1) 50%,
+      rgba(60, 58, 58, 1) 70%,
+      rgba(0, 0, 0, 1) 85%
+    );
     color: #efefef;
     height: 250px;
     margin-bottom: 0;
@@ -14,6 +23,9 @@ const Styles = styled.div`
     z-index: -2;
   }
   .overlay {
+    background: url(${peopleImage}) no-repeat fixed bottom;
+    background-size: cover;
+
     background-color: #000;
     opacity: 0.6;
     position: absolute;

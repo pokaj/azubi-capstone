@@ -12,12 +12,37 @@ const Styles = styled.div`
   .homeBgImg {
     padding-top: 10px;
     // background: url(${homeBg}) no-repeat fixed bottom;
-    background-image: url("https://images.unsplash.com/32/Mc8kW4x9Q3aRR3RkP5Im_IMG_4417.jpg?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+    background: rgb(6, 6, 6);
+    background: linear-gradient(
+      90deg,
+      rgba(6, 6, 6, 1) 15%,
+      rgba(50, 49, 49, 1) 30%,
+      rgba(148, 144, 144, 1) 50%,
+      rgba(60, 58, 58, 1) 70%,
+      rgba(0, 0, 0, 1) 85%
+    );
+    // background-image: url("https://images.unsplash.com/32/Mc8kW4x9Q3aRR3RkP5Im_IMG_4417.jpg?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
   }
 
-  .modalOverlay {
-    background-color: #fff;
-    opacity: 0.6;
+  .cardTitle {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    // width: 150px;
+  }
+
+  .cardText {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    // width: 150px;
+  }
+  .cardTe {
+    height: 80px;
+  }
+  .containWidth {
+    width: 90%;
+    margin: auto;
   }
 `;
 
@@ -28,10 +53,10 @@ const Home = ({ cards }) => {
   return (
     <>
       <Styles>
-        <div>
-          <Jumbotron />
+        <Jumbotron />
 
-          <Container fluid className="homeBgImg">
+        <Container fluid className="homeBgImg">
+          <div className="containWidth">
             {cards.length === 0 ? (
               <div>Sorry there are currently no events available...</div>
             ) : (
@@ -45,13 +70,26 @@ const Home = ({ cards }) => {
                       }}
                     >
                       <Col>
-                        <Card style={{ width: "18rem" }} key={key}>
-                          <Card.Img variant="top" src={event.image} />
+                        <Card
+                          style={{
+                            width: "18rem",
+                            border: 0,
+                            marginBottom: "18px",
+                          }}
+                          key={key}
+                        >
+                          <Card.Img
+                            variant="top"
+                            src={event.image}
+                            style={{ height: "220px" }}
+                          />
                           <Card.Body>
-                            <Card.Title>{`${
+                            <Card.Title className="cardTitle">{`${
                               event.name
-                            } : ${event.date.substring(5)}`}</Card.Title>
-                            <Card.Text>{event.topic}</Card.Text>
+                            } | ${event.date.substring(5)}`}</Card.Title>
+                            <div className="cardTe">
+                              <Card.Text cardText>{event.topic}</Card.Text>
+                            </div>
                             <footer className="blockquote-footer">
                               <small className="text-muted">
                                 "{event.tagline}"
@@ -71,8 +109,8 @@ const Home = ({ cards }) => {
                 })}
               </Row>
             )}
-          </Container>
-        </div>
+          </div>
+        </Container>
       </Styles>
       {modalShow ? (
         <MyVerticallyCenteredModal
@@ -150,8 +188,12 @@ const MyVerticallyCenteredModal = (props) => {
       centered
     >
       <Card className="bg-dark text-white">
-        <Card.Img src={event.eventData.image} alt="Overlay Image" />
-        <Card.ImgOverlay>
+        <Card.Img
+          src={event.eventData.image}
+          alt="Overlay Image"
+          style={{ opacity: "0.4" }}
+        />
+        <Card.ImgOverlay style={{ opacity: "0.9" }}>
           <Card.Title>{event.eventData.name}</Card.Title>
           <Card.Text>
             By: <small>{event.eventData.speaker}</small>
@@ -183,7 +225,7 @@ const MyVerticallyCenteredModal = (props) => {
               />
 
               <button type="submit" placeholder="Confirm Registration">
-                Sign up
+                Join
               </button>
             </form>
           </div>
