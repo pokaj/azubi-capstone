@@ -4,7 +4,7 @@ from .models import EventAttendee
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'tagline', 'speaker', 'topic', 'location', 
-        'room_capacity', 'current_seat_number', 'image', 'current_seat_number', 'date', 'period', 'start_time', 'end_time')
+        'room_capacity', 'current_seat_number', 'image', 'date', 'period', 'start_time', 'end_time')
 
 class EventAttendeesAdmin(admin.ModelAdmin):
     list_display = ('event', 'attendee', 'date_registered')

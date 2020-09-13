@@ -27,6 +27,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         return user
 
+# Event Serializer
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
@@ -39,6 +40,7 @@ class EventSerializer(serializers.ModelSerializer):
 #         model = EventAttendee
 #         fields = ('id', 'event', 'attendee', 'date_registered')
 
+# Event attendee serializer 
 class EventAttendeesSerializer(serializers.ModelSerializer):
     event = serializers.StringRelatedField()
     attendee = serializers.StringRelatedField()
