@@ -12,8 +12,8 @@ import ErrorMessage from "../components/signup/errorMessages";
 
 //variable to hold custom scoped styled sheet using "styled component" component
 const Styles = styled.div`
-  @import url(https://fonts.googleapis.com/css2?family=Itim&display=swap);
-  @import url(https://fonts.googleapis.com/css2?family=Aladin&display=swap);
+  @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Arvo:ital,wght@1,700&display=swap");
 
   .homeBgImg {
     padding-top: 10px;
@@ -60,12 +60,12 @@ const Styles = styled.div`
     margin: auto;
   }
 
-  .itim {
+  .itimfont {
     font-family: "Itim", cursive;
   }
 
-  .aladin {
-    font-family: "Aladin", cursive;
+  .arvofont {
+    font-family: "Arvo", serif;
   }
 `;
 
@@ -242,10 +242,10 @@ const MyVerticallyCenteredModal = (props) => {
           <Card.Title>{event.eventData.name}</Card.Title>
           <Card.Text>
             By: <small>{event.eventData.speaker}</small>
-            <center className="itim">
+            <center className="itimfont font-italic">
               Begins at: {` ${event.eventData.start_time}`}{" "}
             </center>
-            <p className="text-right aladin">
+            <p className="text-right arvofont font-italic">
               Ends at: {` ${event.eventData.end_time}`}
             </p>
           </Card.Text>

@@ -37,8 +37,12 @@ const NavigationBar = () => {
               </NavLink>
             </Nav.Item>
             <Nav.Item>
-              <NavLink className="nav-link" to="/eventRegistrationAndEditForm">
-                Add Event
+              <NavLink
+                className="nav-link"
+                to="/eventRegistrationAndEditForm"
+                // onClick={}
+              >
+                Log Out
               </NavLink>
             </Nav.Item>
           </Nav>
