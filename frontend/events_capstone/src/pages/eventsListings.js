@@ -13,6 +13,7 @@ const Styles = styled.div`
   }
 `;
 
+//component to handle dynamic table row generation
 const EventsListingsTable = ({ events }) => {
   return (
     <>
@@ -28,12 +29,16 @@ const EventsListingsTable = ({ events }) => {
               <th>Date</th>
               <th>Begins At</th>
               <th>Ends At</th>
+              <th>Room Capacity</th>
+              <th>Seats Remaining</th>
 
               {/* Display events in a table form showing details such as Title, Location, Speaker, Tag line */}
             </tr>
           </thead>
           <tbody>
             {events.map((event) => {
+              let seatsRemaining =
+                event.room_capacity - event.current_seat_number;
               return (
                 <>
                   <tr>
@@ -44,6 +49,8 @@ const EventsListingsTable = ({ events }) => {
                     <td>{event.date}</td>
                     <td>{event.start_time}</td>
                     <td>{event.end_time}</td>
+                    <td>{event.room_capacity}</td>
+                    <td>{seatsRemaining}</td>
                   </tr>
                 </>
               );
@@ -55,6 +62,7 @@ const EventsListingsTable = ({ events }) => {
   );
 };
 
+//class to render table of events
 class EventsListingsPage extends Component {
   constructor(props) {
     super(props);
