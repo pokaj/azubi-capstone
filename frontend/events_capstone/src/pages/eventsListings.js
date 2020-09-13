@@ -21,7 +21,6 @@ const EventsListingsTable = ({ events }) => {
         <Table striped bordered hover variant="dark">
           <thead>
             <tr>
-              <th>Id</th>
               <th>Name</th>
               <th>Location</th>
               <th>Speaker(s)</th>
@@ -38,7 +37,6 @@ const EventsListingsTable = ({ events }) => {
               return (
                 <>
                   <tr>
-                    <td>{event.id}</td>
                     <td>{event.name}</td>
                     <td>{event.location}</td>
                     <td>{event.speaker}</td>

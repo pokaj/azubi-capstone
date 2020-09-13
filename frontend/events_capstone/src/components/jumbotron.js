@@ -37,6 +37,7 @@ const Styles = styled.div`
   }
 `;
 
+//jumbotron to display on the top of the home page
 export const Jumbotron = () => (
   <Styles>
     <Jumbo fluid className="jumbo">
