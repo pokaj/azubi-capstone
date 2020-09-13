@@ -171,6 +171,10 @@ const MyVerticallyCenteredModal = (props) => {
 
   //function to handle event booking form submission
   const onSubmit = async (data, e) => {
+    //validates the availability of the eventa bout to be booked and displays an
+    //alert in the case of the event being unavaible eg:fully booked events
+    if (event.eventData.current_seat_number >= event.eventData.room_capacity)
+      return;
     // variable to hold converted form data
     let formBody = [];
     //loop through received data and convert it into FormData()

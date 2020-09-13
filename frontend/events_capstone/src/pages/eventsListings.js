@@ -31,8 +31,6 @@ const EventsListingsTable = ({ events }) => {
               <th>Ends At</th>
               <th>Room Capacity</th>
               <th>Seats Remaining</th>
-
-              {/* Display events in a table form showing details such as Title, Location, Speaker, Tag line */}
             </tr>
           </thead>
           <tbody>
@@ -72,6 +70,7 @@ class EventsListingsPage extends Component {
     };
   }
 
+  //function to fetch all events on page load
   getEvents = () => {
     let url = "http://localhost:8000/api/events/ ";
     fetch(url, {
@@ -90,6 +89,7 @@ class EventsListingsPage extends Component {
       });
   };
 
+  //calls getsEvents on each page update
   componentDidMount() {
     this.getEvents();
   }
