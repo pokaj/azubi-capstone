@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Jumbotron as Jumbo, Container } from "react-bootstrap";
 import styled from "styled-components";
 import peopleImage from "../assets/images/bg2.jpg";
+import Context from "../store/context";
 
 const Styles = styled.div`
   .jumbo {
@@ -38,14 +39,18 @@ const Styles = styled.div`
 `;
 
 //jumbotron to display on the top of the home page
-export const Jumbotron = () => (
-  <Styles>
-    <Jumbo fluid className="jumbo">
-      <div className="overlay"></div>
-      <Container>
-        <h1>Welcome</h1>
-        <p>Click to register for events</p>
-      </Container>
-    </Jumbo>
-  </Styles>
-);
+export const Jumbotron = () => {
+  //getting global staue for login status
+  const { globalState } = useContext(Context);
+  return (
+    <Styles>
+      <Jumbo fluid className="jumbo">
+        <div className="overlay"></div>
+        <Container>
+          <h1>Welcome {globalState.currentUser.first_name}</h1>
+          <p>Click on an event to register for it</p>
+        </Container>
+      </Jumbo>
+    </Styles>
+  );
+};

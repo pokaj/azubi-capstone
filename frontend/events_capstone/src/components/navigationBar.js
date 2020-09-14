@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import swal from "sweetalert";
+import Context from "../store/context";
 
 import Styled from "styled-components";
 
@@ -19,6 +21,44 @@ const Styles = Styled.div`
 `;
 
 const NavigationBar = () => {
+  const { globalState } = useContext(Context);
+
+  //handles user logout for both frontend and backend upon click of logout button
+  const handleLogout = (data) => {
+    let url = "http://localhost:8000/api/logout/";
+
+    // variable to hold converted form data
+    let formBody = [];
+    //loop through received data and convert it into FormData()
+    for (var property in data) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(data[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Token: globalState.currentUser.token,
+        "Content-Type": "application/json",
+      },
+      body: formBody,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        //interactive display(alerts) on successful/unsuccessful user loginout attempt
+
+        swal("Success", "You're logged out", "success");
+
+        console.log("success", data);
+      })
+      .catch((error) => {
+        swal("Error", "Failed to logout, please retry", "warning");
+        console.error("Error:", error);
+      });
+  };
+
   return (
     <Styles>
       <Navbar expand="lg">
@@ -38,9 +78,14 @@ const NavigationBar = () => {
             </Nav.Item>
             <Nav.Item>
               <NavLink
+                onClick={() =>
+                  handleLogout({
+                    username: globalState.currentUser.username,
+                    Token: globalState.currentUser.token,
+                  })
+                }
                 className="nav-link"
-                to="/eventRegistrationAndEditForm"
-                // onClick={}
+                to="/"
               >
                 Log Out
               </NavLink>

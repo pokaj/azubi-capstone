@@ -5,7 +5,7 @@ import GlobalStateProvider from "./store/globalStateProvider";
 import LandingPage from "./components/landingPage/landingPage.js";
 import HomePage from "./pages/homePage";
 import EventsListingsPage from "./pages/eventsListings";
-import EventRegistrationAndEditForm from "./pages/eventRegistrationAndEditForm";
+import EventRegistrationAndEditForm from "./pages/justInCase";
 import NavigationBar from "./components/navigationBar";
 import PageNotFound from "./pages/pageNotFound";
 import SecuredRoute from "./routes/securedRoutes";
@@ -29,7 +29,7 @@ function App() {
             />
             <SecuredRoute
               path="/eventRegistrationAndEditForm"
-              component={EventRegistrationAndEditForm}
+              component={HomePage}
             />
             <Route component={PageNotFound} />
           </Switch>

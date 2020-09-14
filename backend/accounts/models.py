@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Event(models.Model):
     name = models.CharField('Event Name', max_length=100)
     tagline = models.TextField('Tagline')
-    speaker = models.CharField('Speaker', max_length=100)
+    speaker = models.CharField('Speaker', max_length=120)
     topic = models.TextField('Topic')
     location = models.CharField('Location', max_length=100)
     room_capacity = models.IntegerField('Room Capacity')
@@ -30,3 +30,8 @@ class EventAttendee(models.Model):
 
     def __str__(self):
         return self.event.name
+
+
+
+# For the documentation
+# (name, tagline, speaker, topic, location, room_capacity,current_seat_number,date, period_choices, period, start_time, end_time,attendees are objects of the Event model per the requirements in the sheet.)

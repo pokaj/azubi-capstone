@@ -6,6 +6,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         isLoggedIn: true,
+        currentUser: action.currentUser,
       };
     case "LOGOUT":
       return {
@@ -21,6 +22,7 @@ const reducer = (state, action) => {
 const useGlobalState = () => {
   const [globalState, globalDispatch] = useReducer(reducer, {
     isLoggedIn: false,
+    currentUser: {},
   });
 
   return { globalState, globalDispatch };
