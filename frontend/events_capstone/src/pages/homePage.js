@@ -70,9 +70,9 @@ const Styles = styled.div`
 `;
 
 //function to dynamically render event cards
-const Home = ({ cards }) => {
+const Home = ({ cards, refreshEventsData }) => {
   const [modalShow, setModalShow] = useState(false);
-  const [event, setEvent] = useState({ eventData: { name: "awesome" } });
+  const [event, setEvent] = useState({ eventData: { name: "" } });
 
   return (
     <>
@@ -152,6 +152,8 @@ const Home = ({ cards }) => {
           show={modalShow}
           onHide={() => setModalShow(false)}
           eventData={event["eventData"]}
+          getNewEventsData={refreshEventsData}
+          displayModal={setModalShow}
         />
       ) : (
         <div></div>
@@ -199,6 +201,8 @@ const MyVerticallyCenteredModal = (props) => {
         //interactive display on successful/unsuccessful booking of an event
         if (data.status === true) {
           e.target.reset();
+          event.displayModal(false);
+          event.getNewEventsData();
           //alert the user that event booking has been a success
           swal("Success", "Event booked successfully", "success");
         } else {
@@ -294,6 +298,7 @@ export default class HomPage extends Component {
     this.state = {
       isLoading: false,
       cards: [],
+      reRender: false,
     };
   }
 
@@ -324,7 +329,7 @@ export default class HomPage extends Component {
   render() {
     return (
       <>
-        <Home cards={this.state.cards} />
+        <Home cards={this.state.cards} refreshEventsData={this.getEvents} />
       </>
     );
   }

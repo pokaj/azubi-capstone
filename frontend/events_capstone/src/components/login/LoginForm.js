@@ -19,10 +19,6 @@ const LoginForm = (props) => {
 
   const [redirect, setRedirect] = useState({ status: false });
 
-  // const handleRedirect = () => {
-  //   setRedirect({ status: true });
-  // };
-
   //function to handle form submission
   const submitForm = async (data, e) => {
     // variable to hold converted form data
@@ -51,10 +47,9 @@ const LoginForm = (props) => {
         if (data.status === true) {
           e.target.reset();
           //redirect to homepage once login is successful
-          swal("Success", "Login successful", "success").then((value) => {
-            globalDispatch({ type: "LOGIN" });
-            setRedirect({ status: value });
-          });
+          globalDispatch({ type: "LOGIN", currentUser: { ...data } });
+
+          setRedirect({ status: true });
         } else {
           swal(
             "Error",
