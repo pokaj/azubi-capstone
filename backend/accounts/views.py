@@ -114,6 +114,7 @@ class attendAPI(generics.GenericAPIView):
                     'status':'Sorry, all seats have been taken'
                 })
 
+
 class myeventsAPI(generics.GenericAPIView):
     serializer_class = EventAttendeesSerializer
 
@@ -121,16 +122,17 @@ class myeventsAPI(generics.GenericAPIView):
         user_email = request.POST.get('email')
         if(user_email == ''):
             return Response({
-                "status":False, 
-                'message':'No email provided'
-                })
+                "status": False,
+                'message': 'No email provided'
+            })
         else:
             try:
-                myevents = EventAttendee.objects.filter(attendee__email=user_email)
+                myevents = EventAttendee.objects.filter(
+                    attendee__email=user_email)
                 serializer = EventAttendeesSerializer(myevents, many=True)
                 return Response(serializer.data)
             except:
                 return Response({
-                    'status':False,
-                    'message':'An error Occurred'
-                    })
+                    'status': False,
+                    'message': 'An error occurred'
+                })
