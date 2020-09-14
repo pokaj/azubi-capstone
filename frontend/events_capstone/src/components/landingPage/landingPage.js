@@ -69,17 +69,17 @@ const WELCOMECOMPONENT = () => {
 
 const LOGIN = () => {
   return (
-    <div className="login-page">
+    <>
       <LoginForm />
-    </div>
+    </>
   );
 };
 
 const Register = () => {
   return (
-    <div className="login-page">
+    <>
       <RegistrationForm />
-    </div>
+    </>
   );
 };
 
