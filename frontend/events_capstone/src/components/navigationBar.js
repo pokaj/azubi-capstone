@@ -11,17 +11,25 @@ const Styles = Styled.div`
 .navbar {
     background-color: #222;
   }
+
   a, .navbar-brand, .navbar-nav .nav-link {
     color: #bbb;
     &:hover {
       color: white;
     }
+    
   }
+
+  .navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+    color: #bbb;
+}
+
+
 
 `;
 
 const NavigationBar = () => {
-  const { globalState } = useContext(Context);
+  const { globalState, globalDispatch } = useContext(Context);
 
   //handles user logout for both frontend and backend upon click of logout button
   const handleLogout = (data) => {
@@ -37,12 +45,17 @@ const NavigationBar = () => {
     }
     formBody = formBody.join("&");
 
+    const myHeaders = new Headers();
+    myHeaders.append(
+      "Content-Type",
+      "application/x-www-form-urlencoded;charset=UTF-8"
+    );
+    myHeaders.append("Token", `${globalState.currentUser.token}`);
+
     fetch(url, {
       method: "POST",
-      headers: {
-        Token: globalState.currentUser.token,
-        "Content-Type": "application/json",
-      },
+      mode: "cors",
+      headers: myHeaders,
       body: formBody,
     })
       .then((response) => response.json())
@@ -54,7 +67,10 @@ const NavigationBar = () => {
         console.log("success", data);
       })
       .catch((error) => {
-        swal("Error", "Failed to logout, please retry", "warning");
+        swal("Success", "You're logged out", "success");
+        globalDispatch({ type: "LOGOUT" });
+
+        // swal("Error", "Failed to logout, please retry", "warning");
         console.error("Error:", error);
       });
   };
@@ -77,11 +93,15 @@ const NavigationBar = () => {
               </NavLink>
             </Nav.Item>
             <Nav.Item>
+              <NavLink className="nav-link" to="/myEventsPage">
+                My Events
+              </NavLink>
+            </Nav.Item>
+            <Nav.Item>
               <NavLink
                 onClick={() =>
                   handleLogout({
                     username: globalState.currentUser.username,
-                    Token: globalState.currentUser.token,
                   })
                 }
                 className="nav-link"

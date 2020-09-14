@@ -4,8 +4,8 @@ import "./App.css";
 import GlobalStateProvider from "./store/globalStateProvider";
 import LandingPage from "./components/landingPage/landingPage.js";
 import HomePage from "./pages/homePage";
+import MyEventsPage from "./pages/myEvents";
 import EventsListingsPage from "./pages/eventsListings";
-import EventRegistrationAndEditForm from "./pages/justInCase";
 import NavigationBar from "./components/navigationBar";
 import PageNotFound from "./pages/pageNotFound";
 import SecuredRoute from "./routes/securedRoutes";
@@ -27,10 +27,7 @@ function App() {
               path="/eventsListings"
               component={EventsListingsPage}
             />
-            <SecuredRoute
-              path="/eventRegistrationAndEditForm"
-              component={HomePage}
-            />
+            <SecuredRoute path="/myEventsPage" component={MyEventsPage} />
             <Route component={PageNotFound} />
           </Switch>
         </Router>

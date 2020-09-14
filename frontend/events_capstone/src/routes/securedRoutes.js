@@ -5,7 +5,7 @@ import Context from "../store/context";
 
 //component secures private routes from unauthenticated users
 function SecuredRoute(props) {
-  const { globalState, globalDispatch } = useContext(Context);
+  const { globalState } = useContext(Context);
 
   return (
     <Route

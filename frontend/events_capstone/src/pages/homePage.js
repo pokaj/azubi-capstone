@@ -1,10 +1,11 @@
 //dependencies imports
 
-import React, { Component, useState, useEffect } from "react";
+import React, { Component, useState, useEffect, useContext } from "react";
 import { Container, Card, Col, Row, Modal } from "react-bootstrap";
 import swal from "sweetalert";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
+import Context from "../store/context";
 
 //components/models imports
 import { Jumbotron } from "../components/jumbotron";
@@ -90,6 +91,7 @@ const Home = ({ cards, refreshEventsData }) => {
                     event.room_capacity - event.current_seat_number;
                   return (
                     <div
+                      key={key}
                       onClick={() => {
                         setEvent({ eventData: event });
                         setModalShow(true);
@@ -114,7 +116,9 @@ const Home = ({ cards, refreshEventsData }) => {
                               event.name
                             } | ${event.date.substring(5)}`}</Card.Title>
                             <div className="cardTe">
-                              <Card.Text cardText>{event.topic}</Card.Text>
+                              <Card.Text className="cardText">
+                                {event.topic}
+                              </Card.Text>
                             </div>
                             <center>
                               <small className="font-weight-bold">
@@ -164,8 +168,9 @@ const Home = ({ cards, refreshEventsData }) => {
 
 //function to hold modal sheet to display on-click of event card
 const MyVerticallyCenteredModal = (props) => {
+  const { globalState, globalDispatch } = useContext(Context);
   const { register, handleSubmit, errors, setValue } = useForm({
-    defaultValues: { event_id: 0 },
+    defaultValues: { event_id: 0, email: globalState.currentUser.email },
   });
 
   let event = { ...props };
@@ -176,7 +181,8 @@ const MyVerticallyCenteredModal = (props) => {
     //validates the availability of the eventa bout to be booked and displays an
     //alert in the case of the event being unavaible eg:fully booked events
     if (event.eventData.current_seat_number >= event.eventData.room_capacity)
-      return;
+      return swal("Booked Out", "Sorry this event is fully booked", "warning");
+
     // variable to hold converted form data
     let formBody = [];
     //loop through received data and convert it into FormData()
@@ -304,7 +310,7 @@ export default class HomPage extends Component {
 
   // function to handle the fetching of data on page load
   getEvents = () => {
-    let url = "http://localhost:8000/api/events/ ";
+    let url = "http://localhost:8000/api/events/";
     fetch(url, {
       headers: {
         "Content-Type": "application/json",

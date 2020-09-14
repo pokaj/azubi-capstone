@@ -15,7 +15,7 @@ const LoginForm = (props) => {
   const regHandler = () => setChoice("reg");
 
   //getting global staue for login status
-  const { globalState, globalDispatch } = useContext(Context);
+  const { globalDispatch } = useContext(Context);
 
   const [redirect, setRedirect] = useState({ status: false });
 
