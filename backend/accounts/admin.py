@@ -9,5 +9,6 @@ class EventAdmin(admin.ModelAdmin):
 class EventAttendeesAdmin(admin.ModelAdmin):
     list_display = ('event', 'attendee', 'date_registered')
 
+
 admin.site.register(Event, EventAdmin)
 admin.site.register(EventAttendee, EventAttendeesAdmin)

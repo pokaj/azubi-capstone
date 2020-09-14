@@ -16,6 +16,7 @@ from django.core import serializers
 from django.db.models import F
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth import logout
 
 # REGISTER API
 # This API allows users to create their accounts.
@@ -92,6 +93,7 @@ class LoginAPI(KnoxLoginView):
                 })
 
 
+
 class EventView(viewsets.ModelViewSet):
     serializer_class = EventSerializer
     queryset = Event.objects.all()
@@ -104,12 +106,19 @@ class EventView(viewsets.ModelViewSet):
 # 1. After the reuired fields (event id & email) have been provided,
 #    the event with that ID is retrieved from the database.
 # 2. The user with that email is retrieved from the database.
-# 3. The current date is placed into a variable
-# 4. A check is made to determine whether the chosen event has 
+# 3. A query is made to the 'EventAttendee' model to retrieve the 
+#    column with the email and event passed.
+# 4. If a column exists, the user has already registered to attend 
+#    that event and an error message and status are returned.
+# 5. If no column with those exact details are found, 
+#    the current date is placed into a variable
+# 6. A check is made to determine whether the chosen event has 
 #    available seats to be filled.
-# 5. If a seat is available, a seat is saved for that user and 
+# 7. If a seat is available, a seat is saved for that user and 
 #    a status of true and a success message is returned.
-# 6. If there are no seats available, the user is notified.
+# 8. If there are no seats available, the user is notified.
+# 9. If a user or event does not exist, an error message and status 
+#    are returned.
 
 class attendAPI(generics.GenericAPIView):
     serializer_class = EventAttendeesSerializer
@@ -117,31 +126,40 @@ class attendAPI(generics.GenericAPIView):
 
     def post(self, request, format=None):
         if request.method == 'POST':
-            event_id = request.POST.get('event_id')
-            user_email = request.POST.get('email')
-            event = Event.objects.get(pk=event_id)
-            attendee = User.objects.get(email=user_email)
-            date = datetime.datetime.now() 
-            if(event.current_seat_number < event.room_capacity):
-                try:
-                    register_seat = EventAttendee.objects.create(event=event, attendee=attendee, date_registered=date)
-                    register_seat.save()
-                    Event.objects.filter(id=event.id).update(current_seat_number = F('current_seat_number') + 1)
-                    return Response({
-                        'status':True,
-                        'message':'success'
-                    })
-                except:
+            try:
+                event_id = request.POST.get('event_id')
+                user_email = request.POST.get('email')
+                event = Event.objects.get(pk=event_id)
+                attendee = User.objects.get(email=user_email)
+                query = EventAttendee.objects.get(
+                    Q(event=event),
+                    Q(attendee=attendee))
+                if EventAttendee.objects.filter(pk=query.id).exists():
+                    return Response({'status':False, 'message':'You have already registered for this event'})
+            except EventAttendee.DoesNotExist:
+                date = datetime.datetime.now() 
+                if(event.current_seat_number < event.room_capacity):
+                    try:
+                        register_seat = EventAttendee.objects.create(event=event, attendee=attendee, date_registered=date)
+                        register_seat.save()
+                        Event.objects.filter(id=event.id).update(current_seat_number = F('current_seat_number') + 1)
+                        return Response({
+                            'status':True,
+                            'message':'success'
+                        })
+                    except:
+                        return Response({
+                            'status':False,
+                            'message':'There was an error whilst registering for this event.',
+                        })
+                
+                else:
                     return Response({
                         'status':False,
-                        'message':'There was an error whilst registering for this event.',
+                        'message':'Sorry, all seats have been taken'
                     })
-                
-            else:
-                return Response({
-                    'status':False,
-                    'message':'Sorry, all seats have been taken'
-                })
+            except ObjectDoesNotExist:
+                return Response({'status':False, 'message':'The event or user does not exist'})
 
 # UNATTEND API
 # This API helps the user to unregister for an event.
@@ -190,16 +208,17 @@ class myeventsAPI(generics.GenericAPIView):
         user_email = request.POST.get('email')
         if(user_email == ''):
             return Response({
-                "status":False, 
-                'message':'No email provided'
-                })
+                "status": False,
+                'message': 'No email provided'
+            })
         else:
             try:
-                myevents = EventAttendee.objects.filter(attendee__email=user_email)
+                myevents = EventAttendee.objects.filter(
+                    attendee__email=user_email)
                 serializer = EventAttendeesSerializer(myevents, many=True)
                 return Response(serializer.data)
             except:
                 return Response({
-                    'status':False,
-                    'message':'An error Occurred'
-                    })
+                    'status': False,
+                    'message': 'An error occurred'
+                })
