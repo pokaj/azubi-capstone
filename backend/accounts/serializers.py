@@ -27,13 +27,17 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         return user
 
-# Event Serializer
+# # Event Serializer
+# class EventSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Event
+#         fields = ('id', 'name', 'tagline', 'speaker', 'topic', 'location', 
+#         'room_capacity', 'current_seat_number', 'image', 'date', 'period', 'start_time', 'end_time')
+
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ('id', 'name', 'tagline', 'speaker', 'topic', 'location', 
-        'room_capacity', 'current_seat_number', 'image', 'date', 'period', 'start_time', 'end_time')
-
+        fields = '__all__'
 
 # class EventAttendeesSerializer(serializers.ModelSerializer):
 #     class Meta:
