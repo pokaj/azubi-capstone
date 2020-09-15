@@ -3,6 +3,7 @@ import { Nav, Navbar } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import swal from "sweetalert";
 import Context from "../store/context";
+import axios from "axios";
 
 import Styled from "styled-components";
 
@@ -52,27 +53,54 @@ const NavigationBar = () => {
     );
     myHeaders.append("Token", `${globalState.currentUser.token}`);
 
-    fetch(url, {
-      method: "POST",
-      mode: "cors",
-      headers: myHeaders,
-      body: formBody,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        //interactive display(alerts) on successful/unsuccessful user loginout attempt
-
-        swal("Success", "You're logged out", "success");
-
-        console.log("success", data);
+    try {
+      axios({
+        method: "post",
+        url: url,
+        data: formBody,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+          Token: globalState.currentUser.token,
+          Authorization: `Bearer ${globalState.currentUser.token}`,
+        },
       })
-      .catch((error) => {
-        swal("Success", "You're logged out", "success");
-        globalDispatch({ type: "LOGOUT" });
+        .then(function (response) {
+          //success
+          globalDispatch({ type: "LOGOUT" });
+          swal("Success", "You're logged out", "success");
 
-        // swal("Error", "Failed to logout, please retry", "warning");
-        console.error("Error:", error);
-      });
+          console.log(response);
+        })
+        .catch(function (response) {
+          globalDispatch({ type: "LOGOUT" });
+
+          // on failed loggout error
+          swal("Error", "Failed to logout, please retry", "warning");
+          console.log(response);
+        });
+    } catch (e) {}
+
+    // fetch(url, {
+    //   method: "POST",
+    //   mode: "cors",
+    //   headers: myHeaders,
+    //   body: formBody,
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     //interactive display(alerts) on successful/unsuccessful user loginout attempt
+
+    //     swal("Success", "You're logged out", "success");
+
+    //     console.log("success", data);
+    //   })
+    //   .catch((error) => {
+    //     swal("Success", "You're logged out", "success");
+    //     globalDispatch({ type: "LOGOUT" });
+
+    //     // swal("Error", "Failed to logout, please retry", "warning");
+    //     console.error("Error:", error);
+    //   });
   };
 
   return (

@@ -1,8 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import GlobalStateProvider from "./store/globalStateProvider";
 import "./index.css";
 import { App } from "./App";
 import * as serviceWorker from "./serviceWorker";
+
 // import $ from "jquery";
 
 // $(".message a").click(function () {
@@ -11,7 +13,9 @@ import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <GlobalStateProvider>
+      <App />
+    </GlobalStateProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

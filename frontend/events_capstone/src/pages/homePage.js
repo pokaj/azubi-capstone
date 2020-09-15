@@ -1,11 +1,22 @@
 //dependencies imports
 
 import React, { Component, useState, useEffect, useContext } from "react";
-import { Container, Card, Col, Row, Modal } from "react-bootstrap";
+import {
+  Container,
+  Card,
+  Col,
+  Row,
+  Modal,
+  OverlayTrigger,
+  Tooltip,
+  Button,
+  Image,
+} from "react-bootstrap";
 import swal from "sweetalert";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import Context from "../store/context";
+import ReactLogo from "../assets/images/exclamation.svg";
 
 //components/models imports
 import { Jumbotron } from "../components/jumbotron";
@@ -13,7 +24,7 @@ import ErrorMessage from "../components/signup/errorMessages";
 
 //variable to hold custom scoped styled sheet using "styled component" component
 const Styles = styled.div`
-  @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600&display=swap");
   @import url("https://fonts.googleapis.com/css2?family=Arvo:ital,wght@1,700&display=swap");
 
   .homeBgImg {
@@ -30,21 +41,20 @@ const Styles = styled.div`
   }
 
   .cardTitle {
-    font-family: "Itim", cursive;
+    font-family: "Roboto Slab", serif;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    // white-space: nowrap;
     text-overflow: ellipsis;
+    height: 1.5rem;
   }
 
   .cardText {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-  }
-
-  .cardTe {
-    height: 80px;
+    font-size: 15px;
+    height: 20px;
     overflow: ellipsis;
   }
 
@@ -85,68 +95,115 @@ const Home = ({ cards, refreshEventsData }) => {
             {cards.length === 0 ? (
               <div>Sorry there are currently no events available...</div>
             ) : (
-              <Row xs={1} sm={2} md={2} xl={5} lg={3}>
-                {cards.map((event, key) => {
-                  let seatsRemaining =
-                    event.room_capacity - event.current_seat_number;
-                  return (
-                    <div
-                      key={key}
-                      onClick={() => {
-                        setEvent({ eventData: event });
-                        setModalShow(true);
-                      }}
-                    >
-                      <Col>
-                        <Card
+              <center>
+                <Row xs={1} sm={2} md={2} xl={5} lg={3}>
+                  {cards.map((event, key) => {
+                    let seatsRemaining =
+                      event.room_capacity - event.current_seat_number;
+                    return (
+                      <div
+                        key={key}
+                        onClick={() => {
+                          setEvent({ eventData: event });
+                          setModalShow(true);
+                        }}
+                      >
+                        <Col
                           style={{
                             width: "16rem",
-                            border: 0,
-                            marginBottom: "18px",
+                            margin: 0,
+                            padding: 0,
                           }}
-                          key={key}
                         >
-                          <Card.Img
-                            variant="top"
-                            src={event.image}
-                            style={{ height: "220px" }}
-                          />
-                          <Card.Body>
-                            <Card.Title className="cardTitle">{`${
-                              event.name
-                            } | ${event.date.substring(5)}`}</Card.Title>
-                            <div className="cardTe">
+                          <Card
+                            style={{
+                              width: "16rem",
+                              border: 0,
+                              marginBottom: "18px",
+                            }}
+                            key={key}
+                          >
+                            <Card.Img
+                              variant="top"
+                              src={event.image}
+                              style={{ height: "220px" }}
+                            />
+                            <Card.Body>
+                              <center>
+                                <Card.Title className="cardTitle">
+                                  {event.name}
+                                </Card.Title>
+                              </center>
+
                               <Card.Text className="cardText">
-                                {event.topic}
+                                <b className="text-right font-italic">
+                                  On the:
+                                </b>
+                                {`${event.date.substring(5)} `}
+                                <b className="text-right font-italic">
+                                  Begins at:
+                                </b>
+                                {` ${event.start_time.substring(0, 5)}`}
                               </Card.Text>
-                            </div>
-                            <center>
-                              <small className="font-weight-bold">
-                                {`${seatsRemaining} `} seats remaining
-                              </small>
-                            </center>
-                            <footer
-                              className="blockquote-footer"
-                              style={{
-                                height: "20px",
-                                overflow: "hidden",
-                                textoverflow: "ellipsis",
-                              }}
-                            >
-                              <small className="text-muted">
-                                "{event.tagline}"
-                                <cite title="Source Title">
-                                  {`  on the: ${event.date.substring(5)}`}
-                                </cite>
-                              </small>
-                            </footer>
-                          </Card.Body>
-                        </Card>
-                      </Col>
-                    </div>
-                  );
-                })}
-              </Row>
+                              <center>
+                                <OverlayTrigger
+                                  placement="right"
+                                  overlay={
+                                    <Tooltip id="button-tooltip-2">
+                                      <h6>Topic:</h6>
+                                      {event.topic}
+                                    </Tooltip>
+                                  }
+                                >
+                                  {({ ref, ...triggerHandler }) => (
+                                    <Button
+                                      variant="light"
+                                      {...triggerHandler}
+                                      className="d-inline-flex align-items-center"
+                                    >
+                                      <Image
+                                        style={{
+                                          height: "20px",
+                                          width: "20px",
+                                        }}
+                                        ref={ref}
+                                        roundedCircle
+                                        src={ReactLogo}
+                                        fluid
+                                      />
+
+                                      <span className="ml-1">
+                                        <small>Topic</small>
+                                      </span>
+                                    </Button>
+                                  )}
+                                </OverlayTrigger>
+                              </center>
+                              <center>
+                                <small className="font-weight-bold">
+                                  {`${seatsRemaining} `} seats remaining
+                                </small>
+                              </center>
+                              <footer
+                                className="blockquote-footer"
+                                style={{
+                                  height: "20px",
+                                  overflow: "hidden",
+                                  textoverflow: "ellipsis",
+                                }}
+                              >
+                                <small className="text-muted">
+                                  "{event.tagline}"
+                                </small>
+                              </footer>
+                            </Card.Body>
+                          </Card>
+                        </Col>
+                      </div>
+                    );
+                  })}
+                </Row>
+              </center>
             )}
           </div>
         </Container>
@@ -168,7 +225,7 @@ const Home = ({ cards, refreshEventsData }) => {
 
 //function to hold modal sheet to display on-click of event card
 const MyVerticallyCenteredModal = (props) => {
-  const { globalState, globalDispatch } = useContext(Context);
+  const { globalState } = useContext(Context);
   const { register, handleSubmit, errors, setValue } = useForm({
     defaultValues: { event_id: 0, email: globalState.currentUser.email },
   });
@@ -252,12 +309,6 @@ const MyVerticallyCenteredModal = (props) => {
           <Card.Title>{event.eventData.name}</Card.Title>
           <Card.Text>
             By: <small>{event.eventData.speaker}</small>
-            <center className="itimfont font-italic">
-              Begins at: {` ${event.eventData.start_time}`}{" "}
-            </center>
-            <p className="text-right arvofont font-italic">
-              Ends at: {` ${event.eventData.end_time}`}
-            </p>
           </Card.Text>
           <div className="login-page">
             <form className="form" onSubmit={handleSubmit(onSubmit)}>

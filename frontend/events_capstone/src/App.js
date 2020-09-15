@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 
-import GlobalStateProvider from "./store/globalStateProvider";
 import LandingPage from "./components/landingPage/landingPage.js";
 import HomePage from "./pages/homePage";
 import MyEventsPage from "./pages/myEvents";
@@ -17,21 +16,16 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 function App() {
   return (
     <>
-      <GlobalStateProvider>
-        <Router>
-          <NavigationBar />
-          <Switch>
-            <Route path="/" exact component={LandingPage} />
-            <SecuredRoute path="/home" component={HomePage} />
-            <SecuredRoute
-              path="/eventsListings"
-              component={EventsListingsPage}
-            />
-            <SecuredRoute path="/myEventsPage" component={MyEventsPage} />
-            <Route component={PageNotFound} />
-          </Switch>
-        </Router>
-      </GlobalStateProvider>
+      <Router>
+        <NavigationBar />
+        <Switch>
+          <Route path="/" exact component={LandingPage} />
+          <SecuredRoute path="/home" component={HomePage} />
+          <SecuredRoute path="/eventsListings" component={EventsListingsPage} />
+          <SecuredRoute path="/myEventsPage" component={MyEventsPage} />
+          <Route component={PageNotFound} />
+        </Switch>
+      </Router>
     </>
   );
 }
