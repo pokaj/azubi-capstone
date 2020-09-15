@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime    
  
  # Model for Events
 class Event(models.Model):
@@ -25,6 +26,7 @@ class Event(models.Model):
 class EventAttendee(models.Model):
     event = models.ForeignKey(Event, verbose_name='Event', on_delete=models.CASCADE)
     attendee = models.ForeignKey(User, verbose_name='Attendee', on_delete=models.CASCADE)
+    event_date = models.DateField('Event Date', null=False, blank=False, default=datetime.now)
     date_registered = models.DateField('Date Registered')
 
 
