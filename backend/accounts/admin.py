@@ -7,7 +7,7 @@ class EventAdmin(admin.ModelAdmin):
         'room_capacity', 'current_seat_number', 'image', 'date', 'period', 'start_time', 'end_time')
 
 class EventAttendeesAdmin(admin.ModelAdmin):
-    list_display = ('event', 'attendee', 'date_registered')
+    list_display = ('event', 'attendee', 'event_date', 'event_period', 'date_registered')
 
 
 admin.site.register(Event, EventAdmin)

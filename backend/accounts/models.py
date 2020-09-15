@@ -26,7 +26,9 @@ class Event(models.Model):
 class EventAttendee(models.Model):
     event = models.ForeignKey(Event, verbose_name='Event', on_delete=models.CASCADE)
     attendee = models.ForeignKey(User, verbose_name='Attendee', on_delete=models.CASCADE)
-    event_date = models.DateField('Event Date', null=False, blank=False, default=datetime.now)
+    event_date = models.DateField('Event Date', null=False, blank=False)
+    period_choices = [('m', 'Morning'),('mm', 'Midmorning'),('a', 'Afternoon')]
+    event_period = models.CharField('Event Period', choices=period_choices, max_length=50, null=True)
     date_registered = models.DateField('Date Registered')
 
 
