@@ -8,15 +8,15 @@ import {
   Row,
   Modal,
   OverlayTrigger,
-  Tooltip,
   Button,
   Image,
+  Popover,
 } from "react-bootstrap";
 import swal from "sweetalert";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import Context from "../store/context";
-import ReactLogo from "../assets/images/exclamation.svg";
+import more from "../assets/images/more.svg";
 
 //components/models imports
 import { Jumbotron } from "../components/jumbotron";
@@ -27,20 +27,26 @@ const Styles = styled.div`
   @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600&display=swap");
   @import url("https://fonts.googleapis.com/css2?family=Arvo:ital,wght@1,700&display=swap");
 
+  .pageBackground {
+    // background: rgb(6, 6, 6);
+    // background: linear-gradient(
+    //   90deg,
+    //   rgba(6, 6, 6, 1) 15%,
+    //   rgba(50, 49, 49, 1) 30%,
+    //   rgba(148, 144, 144, 1) 50%,
+    //   rgba(60, 58, 58, 1) 70%,
+    //   rgba(0, 0, 0, 1) 85%
+    // );
+    // background-color: #cd9d9d;
+  }
   .homeBgImg {
     padding-top: 10px;
-    background: rgb(6, 6, 6);
-    background: linear-gradient(
-      90deg,
-      rgba(6, 6, 6, 1) 15%,
-      rgba(50, 49, 49, 1) 30%,
-      rgba(148, 144, 144, 1) 50%,
-      rgba(60, 58, 58, 1) 70%,
-      rgba(0, 0, 0, 1) 85%
-    );
+    background-color: #342828;
   }
 
   .cardTitle {
+    padding: 0;
+    margin: 0;
     font-family: "Roboto Slab", serif;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -50,10 +56,12 @@ const Styles = styled.div`
   }
 
   .cardText {
+    padding: 0;
+    margin: 2px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-size: 15px;
+    font-size: 13px;
     height: 20px;
     overflow: ellipsis;
   }
@@ -85,128 +93,136 @@ const Home = ({ cards, refreshEventsData }) => {
   const [modalShow, setModalShow] = useState(false);
   const [event, setEvent] = useState({ eventData: { name: "" } });
 
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Title as="h3">{event.name}</Popover.Title>
+      <Popover.Content>
+        And here's some <strong>amazing</strong> content. It's very engaging.
+        right?
+      </Popover.Content>
+    </Popover>
+  );
+
   return (
     <>
       <Styles>
         <Jumbotron />
-
-        <Container fluid className="homeBgImg">
-          <div className="container-fluid">
-            {cards.length === 0 ? (
-              <div>Sorry there are currently no events available...</div>
-            ) : (
-              <center>
-                <Row xs={1} sm={2} md={2} xl={5} lg={3}>
-                  {cards.map((event, key) => {
-                    let seatsRemaining =
-                      event.room_capacity - event.current_seat_number;
-                    return (
-                      <div
-                        key={key}
-                        onClick={() => {
-                          setEvent({ eventData: event });
-                          setModalShow(true);
-                        }}
-                      >
-                        <Col
-                          style={{
-                            width: "16rem",
-                            margin: 0,
-                            padding: 0,
+        <div className="pageBackground">
+          <Container fluid className="homeBgImg">
+            <div className="container-fluid">
+              {cards.length === 0 ? (
+                <div>Sorry there are currently no events available...</div>
+              ) : (
+                <center>
+                  <Row xs={1} sm={2} md={2} xl={5} lg={3}>
+                    {cards.map((event, key) => {
+                      let seatsRemaining =
+                        event.room_capacity - event.current_seat_number;
+                      return (
+                        <div
+                          key={key}
+                          onClick={() => {
+                            setEvent({ eventData: event });
+                            setModalShow(true);
                           }}
                         >
-                          <Card
+                          <Col
                             style={{
                               width: "16rem",
-                              border: 0,
-                              marginBottom: "18px",
+                              margin: 0,
+                              padding: 0,
                             }}
-                            key={key}
                           >
-                            <Card.Img
-                              variant="top"
-                              src={event.image}
-                              style={{ height: "220px" }}
-                            />
-                            <Card.Body>
-                              <center>
-                                <Card.Title className="cardTitle">
-                                  {event.name}
-                                </Card.Title>
-                              </center>
+                            <Card
+                              style={{
+                                width: "16rem",
+                                border: 0,
+                                marginBottom: "18px",
+                                // backgroundColor: "#342828",
 
-                              <Card.Text className="cardText">
-                                <b className="text-right font-italic">
-                                  On the:
-                                </b>
-                                {`${event.date.substring(5)} `}
-                                <b className="text-right font-italic">
-                                  Begins at:
-                                </b>
-                                {` ${event.start_time.substring(0, 5)}`}
-                              </Card.Text>
-                              <center>
-                                <OverlayTrigger
-                                  placement="right"
-                                  overlay={
-                                    <Tooltip id="button-tooltip-2">
-                                      <h6>Topic:</h6>
-                                      {event.topic}
-                                    </Tooltip>
-                                  }
-                                >
-                                  {({ ref, ...triggerHandler }) => (
-                                    <Button
-                                      variant="light"
-                                      {...triggerHandler}
-                                      className="d-inline-flex align-items-center"
-                                    >
-                                      <Image
-                                        style={{
-                                          height: "20px",
-                                          width: "20px",
-                                        }}
-                                        ref={ref}
-                                        roundedCircle
-                                        src={ReactLogo}
-                                        fluid
-                                      />
+                                // color: "#C0AFAF",
+                                // opacity: "0.4",
+                              }}
+                              key={key}
+                            >
+                              <Card.Img
+                                variant="top"
+                                src={event.image}
+                                style={{ height: "220px" }}
+                              />
+                              <Card.Body style={{ padding: "2px" }}>
+                                <center>
+                                  <Card.Title className="cardTitle">
+                                    {event.name}
+                                  </Card.Title>
+                                </center>
 
-                                      <span className="ml-1">
-                                        <small>Topic</small>
-                                      </span>
-                                    </Button>
-                                  )}
-                                </OverlayTrigger>
-                              </center>
-                              <center>
+                                <Card.Text className="cardText">
+                                  <b className="text-right font-italic">
+                                    On the:
+                                  </b>
+                                  <small>{`${event.date.substring(5)} `}</small>
+                                  <b className="text-right font-italic">
+                                    Begins at:
+                                  </b>
+                                  <small>
+                                    {` ${event.start_time.substring(0, 5)}`}
+                                  </small>
+                                </Card.Text>
+                                <Button
+                                  style={{ width: "40px" }}
+                                  className="invisible"
+                                ></Button>
+
                                 <small className="font-weight-bold">
                                   {`${seatsRemaining} `} seats remaining
                                 </small>
-                              </center>
-                              <footer
-                                className="blockquote-footer"
-                                style={{
-                                  height: "20px",
-                                  overflow: "hidden",
-                                  textoverflow: "ellipsis",
-                                }}
-                              >
-                                <small className="text-muted">
-                                  "{event.tagline}"
-                                </small>
-                              </footer>
-                            </Card.Body>
-                          </Card>
-                        </Col>
-                      </div>
-                    );
-                  })}
-                </Row>
-              </center>
-            )}
-          </div>
-        </Container>
+                                <OverlayTrigger
+                                  trigger="hover"
+                                  placement="auto"
+                                  overlay={popover}
+                                >
+                                  <Button
+                                    variant="light"
+                                    className="d-inline-flex align-items-center"
+                                  >
+                                    <Image
+                                      style={{
+                                        height: "20px",
+                                        width: "20px",
+                                      }}
+                                      roundedCircle
+                                      src={more}
+                                      fluid
+                                    />
+                                  </Button>
+                                </OverlayTrigger>
+
+                                <footer
+                                  className="blockquote-footer"
+                                  style={{
+                                    height: "20px",
+                                    overflow: "hidden",
+                                    textoverflow: "ellipsis",
+                                  }}
+                                >
+                                  {" "}
+                                  <small className="text-muted">
+                                    "{event.tagline}"
+                                  </small>
+                                </footer>
+                              </Card.Body>
+                            </Card>
+                          </Col>
+                        </div>
+                      );
+                    })}
+                  </Row>
+                </center>
+              )}
+            </div>
+          </Container>
+        </div>
       </Styles>
       {modalShow ? (
         <MyVerticallyCenteredModal

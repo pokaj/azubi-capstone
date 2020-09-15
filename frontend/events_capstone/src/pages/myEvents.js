@@ -74,6 +74,7 @@ function MyEventsPage() {
     }
     formBody = formBody.join("&");
 
+    // let url = "http://localhost:8000/api/myevents";
     let url = "http://localhost:8000/api/events/";
 
     //post converted form data for django and recieve success status as boolean
@@ -114,48 +115,52 @@ function MyEventsPage() {
   return (
     <>
       <Styles>
-        <Container style={{ width: "85%" }} fluid>
-          <Jumbotron className="overlay">
-            <h2>
-              Welcome {globalState.currentUser.username} this is your dashboard
-            </h2>
-            <p>You can edit events you've registered for from here.</p>
-            <Link to="/about">
-              <Button className="btn-secondary">All Events</Button>
-            </Link>
-          </Jumbotron>
-          <Row
-            xs={1}
-            sm={2}
-            md={2}
-            xl={5}
-            lg={3}
-            className="show-grid text-center"
-          >
-            {userEvents.map((event) => {
-              return (
-                <Col xs={12} sm={4} className="person-wrapper">
-                  <Image
-                    onClick={() => {
-                      setCurrentEvent(event);
-                      setModalShow(true);
-                    }}
-                    roundedCircle
-                    style={{
-                      height: "200px",
-                      width: "200px",
-                    }}
-                    src={event.image}
-                    className="profile-pic"
-                  />
-                  <h5>{event.name}</h5>
-                  <p>{event.topic}</p>
-                </Col>
-              );
-            })}
-          </Row>
-        </Container>
+        <div>
+          <Container style={{ width: "85%" }} fluid>
+            <Jumbotron className="overlay">
+              <h2>
+                Welcome {globalState.currentUser.username} this is your
+                dashboard
+              </h2>
+              <p>You can edit events you've registered for from here.</p>
+              <Link to="/about">
+                <Button className="btn-secondary">All Events</Button>
+              </Link>
+            </Jumbotron>
+            <Row
+              xs={1}
+              sm={2}
+              md={2}
+              xl={5}
+              lg={3}
+              className="show-grid text-center"
+            >
+              {userEvents.map((event) => {
+                return (
+                  <Col xs={12} sm={4} className="person-wrapper">
+                    <Image
+                      onClick={() => {
+                        setCurrentEvent(event);
+                        setModalShow(true);
+                      }}
+                      roundedCircle
+                      style={{
+                        height: "200px",
+                        width: "200px",
+                      }}
+                      src={event.image}
+                      className="profile-pic"
+                    />
+                    <h5>{event.name}</h5>
+                    <p>{event.topic}</p>
+                  </Col>
+                );
+              })}
+            </Row>
+          </Container>
+        </div>
       </Styles>
+
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}

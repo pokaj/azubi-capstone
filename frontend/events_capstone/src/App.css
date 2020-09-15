@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  background: #342828;
+  background: -webkit-linear-gradient(right, #342828, #342828);
+  background: -moz-linear-gradient(right, #342828, #342828);
+  background: -o-linear-gradient(right, #342828, #342828);
+  background: linear-gradient(to left, #342828, #342828);
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

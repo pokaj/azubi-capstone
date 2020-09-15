@@ -6,29 +6,33 @@ import Context from "../store/context";
 
 const Styles = styled.div`
   .jumbo {
-    // background: url(${peopleImage}) no-repeat fixed bottom;
-    // background-size: cover;
-    background: rgb(6, 6, 6);
-    background: linear-gradient(
-      90deg,
-      rgba(6, 6, 6, 1) 15%,
-      rgba(50, 49, 49, 1) 30%,
-      rgba(148, 144, 144, 1) 50%,
-      rgba(60, 58, 58, 1) 70%,
-      rgba(0, 0, 0, 1) 85%
-    );
+    background: rgb(205, 157, 157);
+    background: radial-gradient(
+        circle,
+        rgba(205, 157, 157, 0) 0%,
+        rgba(63, 59, 59, 0.4598214285714286) 88%,
+        rgba(52, 52, 52, 1) 98%
+      ),
+      url(${peopleImage});
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: fixed bottom;
     color: #efefef;
-    height: 250px;
+    height: 450px;
     margin-bottom: 0;
     position: relative;
     z-index: -2;
   }
-  .overlay {
-    background: url(${peopleImage}) no-repeat fixed bottom;
-    background-size: cover;
 
-    background-color: #000;
-    opacity: 0.6;
+  .overlay {
+    background: rgb(52, 40, 40);
+    background: linear-gradient(
+      180deg,
+      rgba(52, 40, 40, 0) 0%,
+      rgba(52, 40, 40, 1) 97%
+    );
+
+    // background-color: #000;
     position: absolute;
     top: 0;
     left: 0;

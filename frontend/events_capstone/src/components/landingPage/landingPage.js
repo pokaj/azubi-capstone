@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Container } from "react-bootstrap";
 import LoginForm from "../login/LoginForm";
 import RegistrationForm from "../signup/registration_form";
 import "./styles.css";
@@ -60,11 +61,7 @@ const WELCOMECOMPONENT = () => {
     next = register;
   }
 
-  return (
-    <>
-      <div>{next}</div>
-    </>
-  );
+  return <>{next}</>;
 };
 
 const LOGIN = () => {
