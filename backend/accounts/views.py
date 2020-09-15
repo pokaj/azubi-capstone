@@ -93,7 +93,6 @@ class LoginAPI(KnoxLoginView):
                 })
 
 
-
 class EventView(viewsets.ModelViewSet):
     serializer_class = EventSerializer
     queryset = Event.objects.all()
@@ -137,29 +136,40 @@ class attendAPI(generics.GenericAPIView):
                 if EventAttendee.objects.filter(pk=query.id).exists():
                     return Response({'status':False, 'message':'You have already registered for this event'})
             except EventAttendee.DoesNotExist:
-                date = datetime.datetime.now() 
-                if(event.current_seat_number < event.room_capacity):
-                    try:
-                        register_seat = EventAttendee.objects.create(event=event, attendee=attendee, date_registered=date)
-                        register_seat.save()
-                        Event.objects.filter(id=event.id).update(current_seat_number = F('current_seat_number') + 1)
-                        return Response({
-                            'status':True,
-                            'message':'success'
-                        })
-                    except:
-                        return Response({
-                            'status':False,
-                            'message':'There was an error whilst registering for this event.',
-                        })
+                event_date = event.date
+                user_event = EventAttendee.objects.get(attendee=attendee)
+
+                answer = EventAttendee.objects.filter(event__date=event_date)
+                return HttpResponse(answer)
+
+                # doc_stars = Event.objects.get(id=user_events.id)
                 
-                else:
-                    return Response({
-                        'status':False,
-                        'message':'Sorry, all seats have been taken'
-                    })
-            except ObjectDoesNotExist:
-                return Response({'status':False, 'message':'The event or user does not exist'})
+                
+
+                # return HttpResponse(user_events.date_registered)
+            #     date = datetime.datetime.now() 
+            #     if(event.current_seat_number < event.room_capacity):
+            #         try:
+            #             register_seat = EventAttendee.objects.create(event=event, attendee=attendee, date_registered=date)
+            #             register_seat.save()
+            #             Event.objects.filter(id=event.id).update(current_seat_number = F('current_seat_number') + 1)
+            #             return Response({
+            #                 'status':True,
+            #                 'message':'success'
+            #             })
+            #         except:
+            #             return Response({
+            #                 'status':False,
+            #                 'message':'There was an error whilst registering for this event.',
+            #             })
+                
+            #     else:
+            #         return Response({
+            #             'status':False,
+            #             'message':'Sorry, all seats have been taken'
+            #         })
+            # except ObjectDoesNotExist:
+            #     return Response({'status':False, 'message':'The event or user does not exist'})
 
 # UNATTEND API
 # This API helps the user to unregister for an event.
