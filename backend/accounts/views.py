@@ -208,16 +208,25 @@ class unattendAPI(generics.GenericAPIView):
 # 1. If a user exists with that email, all events the user has 
 #    has registered for are returned.
 
+
 class myeventsAPI(generics.GenericAPIView):
-    serializer_class = EventSerializer
+    serializer_class = EventAttendeesSerializer
 
     def post(self, request, format=None):
         user_email = request.POST.get('email')
-        events = Event.objects.get(pk=3)
-        serializer = EventSerializer(events)
-        here = [{'name':'philip'},{'name':'philip'}]
-        for x in here:
-            print('afriyie')
-
-        return Response(here.__len__())
-        
+        if(user_email == ''):
+            return Response({
+                "status": False,
+                'message': 'No email provided'
+            })
+        else:
+            try:
+                myevents = EventAttendee.objects.filter(
+                    attendee__email=user_email)
+                serializer = EventAttendeesSerializer(myevents, many=True)
+                return Response(serializer.data)
+            except:
+                return Response({
+                    'status': False,
+                    'message': 'An error occurred'
+                })
