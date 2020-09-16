@@ -12,5 +12,7 @@ urlpatterns = [
     path('api/login/', LoginAPI.as_view(), name='login'),
     path('api/attend', views.attendAPI.as_view(), name='attend'),
     path('api/unattend', views.unattendAPI.as_view(), name='unattend'),
-    path('api/myevents', views.myeventsAPI.as_view(), name='myevents')
+    path('api/myevents', views.myeventsAPI.as_view(), name='myevents'),
+    # path('api/totalevents', views.totaleventsAPI.as_view(), name='totalevents'),
+    path('api/registered', views.registeredAPI.as_view(), name='registered')
 ]

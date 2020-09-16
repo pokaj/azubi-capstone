@@ -27,22 +27,10 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         return user
 
-# # Event Serializer
-# class EventSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Event
-#         fields = ('id', 'name', 'tagline', 'speaker', 'topic', 'location', 
-#         'room_capacity', 'current_seat_number', 'image', 'date', 'period', 'start_time', 'end_time')
-
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = '__all__'
-
-# class EventAttendeesSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = EventAttendee
-#         fields = ('id', 'event', 'attendee', 'date_registered')
 
 # Event attendee serializer 
 class EventAttendeesSerializer(serializers.ModelSerializer):
@@ -50,4 +38,12 @@ class EventAttendeesSerializer(serializers.ModelSerializer):
     attendee = serializers.StringRelatedField()
     class Meta:
         model = EventAttendee
+        fields = '__all__'
+
+
+
+# Users serializer 
+class Userserializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
         fields = '__all__'
