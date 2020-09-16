@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Col,
@@ -11,10 +11,10 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import Context from "../store/context";
 import swal from "sweetalert";
 import styled from "styled-components";
 import bg from "../assets/images/jumbo2Bg.jpg";
+import { useGlobalStateStore } from "../store/globalContext";
 
 const Styles = styled.div`
   .overlay {
@@ -27,7 +27,7 @@ const Styles = styled.div`
 
 function MyVerticallyCenteredModal(props) {
   let { currentEvent } = { ...props };
-  console.log("yjkbkj", currentEvent);
+
   return (
     <Modal
       {...props}
@@ -56,16 +56,16 @@ function MyVerticallyCenteredModal(props) {
 }
 
 function MyEventsPage() {
-  const { globalState } = useContext(Context);
   const [userEvents, setUserEvents] = useState([]);
   const [modalShow, setModalShow] = useState(false);
   const [currentEvent, setCurrentEvent] = useState({});
+  const globalStateStore = useGlobalStateStore();
 
   useEffect(() => {
     // variable to hold converted form data
     let formBody = [];
 
-    let userEmail = { email: globalState.currentUser.email };
+    let userEmail = { email: globalStateStore.currentUserData.email };
     //loop through received data and convert it into FormData()
     for (var property in userEmail) {
       var encodedKey = encodeURIComponent(property);
@@ -94,7 +94,7 @@ function MyEventsPage() {
         swal("Error", "Login failure, please retry", "warning");
         console.error("Error:", error);
       });
-  }, [globalState.currentUser.email, setUserEvents]);
+  }, [globalStateStore.currentUserData.email, setUserEvents]);
 
   const showDetails = () => {
     return (
@@ -119,7 +119,7 @@ function MyEventsPage() {
           <Container style={{ width: "85%" }} fluid>
             <Jumbotron className="overlay">
               <h2>
-                Welcome {globalState.currentUser.username} this is your
+                Welcome {globalStateStore.currentUserData.username} this is your
                 dashboard
               </h2>
               <p>You can edit events you've registered for from here.</p>

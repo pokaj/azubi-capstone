@@ -1,13 +1,13 @@
 //import dependencies
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import swal from "sweetalert";
 import { Redirect } from "react-router";
+import { useGlobalStateStore } from "../../store/globalContext";
 
 //import modules
 import RegistrationForm from "../signup/registration_form";
 import ErrorMessage from "../signup/errorMessages";
-import Context from "../../store/context";
 
 const LoginForm = (props) => {
   const { register, handleSubmit, errors } = useForm();
@@ -15,7 +15,8 @@ const LoginForm = (props) => {
   const regHandler = () => setChoice("reg");
 
   //getting global staue for login status
-  const { globalDispatch } = useContext(Context);
+
+  const globalUserStateStore = useGlobalStateStore();
 
   const [redirect, setRedirect] = useState({ status: false });
 
@@ -47,8 +48,12 @@ const LoginForm = (props) => {
         if (data.status === true) {
           e.target.reset();
           //redirect to homepage once login is successful
-          globalDispatch({ type: "LOGIN", currentUser: { ...data } });
-
+          globalUserStateStore.onLogIn();
+          globalUserStateStore.addCurrentUserData(data);
+          console.log(
+            "login state data is:",
+            globalUserStateStore.currentUserData
+          );
           setRedirect({ status: true });
         } else {
           swal(

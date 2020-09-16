@@ -1,6 +1,6 @@
 //dependencies imports
 
-import React, { Component, useState, useEffect, useContext } from "react";
+import React, { Component, useState, useEffect } from "react";
 import {
   Container,
   Card,
@@ -15,12 +15,13 @@ import {
 import swal from "sweetalert";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import Context from "../store/context";
 import more from "../assets/images/more.svg";
 
 //components/models imports
 import { Jumbotron } from "../components/jumbotron";
 import ErrorMessage from "../components/signup/errorMessages";
+import { useGlobalStateStore } from "../store/globalContext";
+import { useObserver } from "mobx-react";
 
 //variable to hold custom scoped styled sheet using "styled component" component
 const Styles = styled.div`
@@ -92,16 +93,6 @@ const Styles = styled.div`
 const Home = ({ cards, refreshEventsData }) => {
   const [modalShow, setModalShow] = useState(false);
   const [event, setEvent] = useState({ eventData: { name: "" } });
-
-  const popover = (
-    <Popover id="popover-basic">
-      <Popover.Title as="h3">{event.name}</Popover.Title>
-      <Popover.Content>
-        And here's some <strong>amazing</strong> content. It's very engaging.
-        right?
-      </Popover.Content>
-    </Popover>
-  );
 
   return (
     <>
@@ -180,7 +171,24 @@ const Home = ({ cards, refreshEventsData }) => {
                                 <OverlayTrigger
                                   trigger="hover"
                                   placement="auto"
-                                  overlay={popover}
+                                  overlay={
+                                    <Popover id="popover-basic">
+                                      <Popover.Title as="h3">
+                                        {event.name}
+                                      </Popover.Title>
+                                      <Popover.Content>
+                                        {event.topic}
+                                        <small>
+                                          <p>Speaker: {event.speaker}</p>
+                                          Location: {event.location}
+                                          <p>
+                                            Ends at:{" "}
+                                            {event.end_time.substring(0, 5)} GMT
+                                          </p>
+                                        </small>
+                                      </Popover.Content>
+                                    </Popover>
+                                  }
                                 >
                                   <Button
                                     variant="light"
@@ -241,9 +249,13 @@ const Home = ({ cards, refreshEventsData }) => {
 
 //function to hold modal sheet to display on-click of event card
 const MyVerticallyCenteredModal = (props) => {
-  const { globalState } = useContext(Context);
+  const globalUserState = useGlobalStateStore();
+
   const { register, handleSubmit, errors, setValue } = useForm({
-    defaultValues: { event_id: 0, email: globalState.currentUser.email },
+    defaultValues: {
+      event_id: 0,
+      email: globalUserState.currentUserData.email,
+    },
   });
 
   let event = { ...props };
@@ -304,7 +316,12 @@ const MyVerticallyCenteredModal = (props) => {
       });
   };
 
-  return (
+  useEffect(() => {
+    let id = event.eventData.id;
+    setValue("event_id", id);
+  });
+
+  return useObserver(() => (
     <Modal
       {...props}
       size="lg"
@@ -312,10 +329,6 @@ const MyVerticallyCenteredModal = (props) => {
       centered
     >
       <Card className="bg-dark text-white">
-        {useEffect(() => {
-          let id = event.eventData.id;
-          setValue("event_id", id);
-        })}
         <Card.Img
           src={event.eventData.image}
           alt="Overlay Image"
@@ -361,7 +374,7 @@ const MyVerticallyCenteredModal = (props) => {
         </Card.ImgOverlay>
       </Card>
     </Modal>
-  );
+  ));
 };
 
 //class component to render functional components

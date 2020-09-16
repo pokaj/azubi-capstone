@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import GlobalStateProvider from "./store/globalStateProvider";
+import { GlobalStateProvider } from "./store/globalContext";
 import "./index.css";
 import { App } from "./App";
 import * as serviceWorker from "./serviceWorker";

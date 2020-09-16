@@ -13,7 +13,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //import dependencies to handle routing
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+// const StoreContext = React.createContext();
+
 function App() {
+  //handling global state with mobx state managaement
+
   return (
     <>
       <Router>

@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import swal from "sweetalert";
-import Context from "../store/context";
 import axios from "axios";
 
 import Styled from "styled-components";
+import { useGlobalStateStore } from "../store/globalContext";
 
 const Styles = Styled.div`
 
@@ -30,7 +30,7 @@ const Styles = Styled.div`
 `;
 
 const NavigationBar = () => {
-  const { globalState, globalDispatch } = useContext(Context);
+  const globalStateStore = useGlobalStateStore();
 
   //handles user logout for both frontend and backend upon click of logout button
   const handleLogout = (data) => {
@@ -51,7 +51,7 @@ const NavigationBar = () => {
       "Content-Type",
       "application/x-www-form-urlencoded;charset=UTF-8"
     );
-    myHeaders.append("Token", `${globalState.currentUser.token}`);
+    myHeaders.append("Token", `${globalStateStore.currentUserData.token}`);
 
     try {
       axios({
@@ -60,20 +60,16 @@ const NavigationBar = () => {
         data: formBody,
         headers: {
           "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-          Token: globalState.currentUser.token,
-          Authorization: `Bearer ${globalState.currentUser.token}`,
+          // Token: globalStateStore.currentUserData.token,
+          Authorization: `Token ${globalStateStore.currentUserData.token}`,
         },
       })
         .then(function (response) {
           //success
-          globalDispatch({ type: "LOGOUT" });
+          globalStateStore.onLogOut();
           swal("Success", "You're logged out", "success");
-
-          console.log(response);
         })
         .catch(function (response) {
-          globalDispatch({ type: "LOGOUT" });
-
           // on failed loggout error
           swal("Error", "Failed to logout, please retry", "warning");
           console.log(response);
@@ -129,7 +125,7 @@ const NavigationBar = () => {
               <NavLink
                 onClick={() =>
                   handleLogout({
-                    username: globalState.currentUser.username,
+                    username: globalStateStore.currentUserData.username,
                   })
                 }
                 className="nav-link"

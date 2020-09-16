@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+import { useObserver } from "mobx-react";
+import React from "react";
+import { useGlobalStateStore } from "../store/globalContext";
+
 import { Jumbotron as Jumbo, Container } from "react-bootstrap";
 import styled from "styled-components";
 import peopleImage from "../assets/images/bg2.jpg";
-import Context from "../store/context";
 
 const Styles = styled.div`
   .jumbo {
@@ -45,16 +47,18 @@ const Styles = styled.div`
 //jumbotron to display on the top of the home page
 export const Jumbotron = () => {
   //getting global staue for login status
-  const { globalState } = useContext(Context);
-  return (
+  // const { globalState } = useContext(Context);
+  const globalUserState = useGlobalStateStore();
+
+  return useObserver(() => (
     <Styles>
       <Jumbo fluid className="jumbo">
         <div className="overlay"></div>
         <Container>
-          <h1>Welcome {globalState.currentUser.first_name}</h1>
+          <h1>Welcome {globalUserState.currentUserData.username}</h1>
           <p>Click on an event to register for it</p>
         </Container>
       </Jumbo>
     </Styles>
-  );
+  ));
 };
