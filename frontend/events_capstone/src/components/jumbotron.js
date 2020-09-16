@@ -34,7 +34,6 @@ const Styles = styled.div`
       rgba(52, 40, 40, 1) 97%
     );
 
-    // background-color: #000;
     position: absolute;
     top: 0;
     left: 0;
@@ -55,9 +54,9 @@ export const Jumbotron = () => {
     <Styles>
       <Jumbo fluid className="jumbo">
         <div className="overlay"></div>
-        <Container>
+        <Container fluid>
           <h1>Welcome {globalUserState.currentUserData.username}</h1>
-          <p>Click on an event to register for it</p>
+          <h5>Click on an event to register for it</h5>
         </Container>
       </Jumbo>
     </Styles>

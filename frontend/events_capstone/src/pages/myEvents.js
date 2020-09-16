@@ -20,7 +20,7 @@ import { useGlobalStateStore } from "../store/globalContext";
 
 //scoped css for component
 const Styles = styled.div`
-  .overlay {
+  .jumboOverlay {
     background: url(${bg}) no-repeat fixed bottom;
     background-size: cover;
     margin-top: 20px;
@@ -64,6 +64,7 @@ function MyVerticallyCenteredModal(props) {
 function MyEventsPage() {
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
+  const [myEvents, setMyEvents] = useState([]);
   const [modalShow, setModalShow] = useState(false);
   const [currentEvent, setCurrentEvent] = useState({});
   const globalStateStore = useGlobalStateStore();
@@ -82,27 +83,54 @@ function MyEventsPage() {
     }
     formBody = formBody.join("&");
 
-    // let url = "http://localhost:8000/api/myevents";
-    let url = "http://localhost:8000/api/events/";
+    let url = "http://localhost:8000/api/myevents";
+    let url2 = "http://localhost:8000/api/events/";
 
     //post converted form data for django and recieve success status as boolean
+
+    //fetching  the current user's booked events from endpoint
     fetch(url, {
-      // method: "POST",
+      method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
       },
-      // body: formBody,
+      body: formBody,
     })
       .then((response) => response.json())
       .then((data) => {
         // console.log(`the users events are: ${JSON.stringify(data)}`);
-        setUserEvents(data);
+        setMyEvents(data);
       })
       .catch((error) => {
-        swal("Error", "Login failure, please retry", "warning");
         console.error("Error:", error);
       });
-  }, [globalStateStore.currentUserData.email, setUserEvents]);
+
+    //fetching all events from endpoint
+    fetch(url2, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        //filtering through all events to pick only events user booked for
+        // let tempDataHolder = data.filter(
+        //   (eventData) =>
+        //     myEvents.findIndex((i) => i.event === eventData.event) !== "-1"
+        // );
+
+        let tempDataHolder = [];
+        data.forEach((eventData) => {
+          if (myEvents.findIndex((i) => i.event === eventData.event) !== "-1")
+            tempDataHolder.push(eventData);
+        });
+
+        setUserEvents(tempDataHolder);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [globalStateStore.currentUserData.email, setUserEvents, setMyEvents]);
 
   //card component to display on top of modal view
   const showDetails = () => {
@@ -126,7 +154,7 @@ function MyEventsPage() {
       <Styles>
         <div>
           <Container style={{ width: "85%" }} fluid>
-            <Jumbotron className="overlay">
+            <Jumbotron className="jumboOverlay">
               <h2>
                 Welcome {globalStateStore.currentUserData.username}, this is
                 your dashboard
