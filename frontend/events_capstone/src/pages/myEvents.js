@@ -1,3 +1,4 @@
+//dependencies imports
 import React, { useState, useEffect } from "react";
 import {
   Container,
@@ -10,21 +11,25 @@ import {
   Modal,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
 import swal from "sweetalert";
 import styled from "styled-components";
+
+//modules imports
 import bg from "../assets/images/jumbo2Bg.jpg";
 import { useGlobalStateStore } from "../store/globalContext";
 
+//scoped css for component
 const Styles = styled.div`
   .overlay {
     background: url(${bg}) no-repeat fixed bottom;
     background-size: cover;
     margin-top: 20px;
     height: 400px;
+    color: white;
   }
 `;
 
+//modal component
 function MyVerticallyCenteredModal(props) {
   let { currentEvent } = { ...props };
 
@@ -55,12 +60,15 @@ function MyVerticallyCenteredModal(props) {
   );
 }
 
+//events page component(main page)
 function MyEventsPage() {
   const [userEvents, setUserEvents] = useState([]);
+  const [allEvents, setAllEvents] = useState([]);
   const [modalShow, setModalShow] = useState(false);
   const [currentEvent, setCurrentEvent] = useState({});
   const globalStateStore = useGlobalStateStore();
 
+  //call whenever component is loaded on screen
   useEffect(() => {
     // variable to hold converted form data
     let formBody = [];
@@ -96,6 +104,7 @@ function MyEventsPage() {
       });
   }, [globalStateStore.currentUserData.email, setUserEvents]);
 
+  //card component to display on top of modal view
   const showDetails = () => {
     return (
       <Card className="text-center">
@@ -119,8 +128,8 @@ function MyEventsPage() {
           <Container style={{ width: "85%" }} fluid>
             <Jumbotron className="overlay">
               <h2>
-                Welcome {globalStateStore.currentUserData.username} this is your
-                dashboard
+                Welcome {globalStateStore.currentUserData.username}, this is
+                your dashboard
               </h2>
               <p>You can edit events you've registered for from here.</p>
               <Link to="/about">
@@ -160,12 +169,15 @@ function MyEventsPage() {
           </Container>
         </div>
       </Styles>
-
-      <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        currentEvent={currentEvent}
-      />
+      {modalShow ? (
+        <MyVerticallyCenteredModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          currentEvent={currentEvent}
+        />
+      ) : (
+        <div></div>
+      )}
     </>
   );
 }

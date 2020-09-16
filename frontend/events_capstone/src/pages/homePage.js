@@ -15,13 +15,13 @@ import {
 import swal from "sweetalert";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import more from "../assets/images/more.svg";
+import { useObserver } from "mobx-react";
 
 //components/models imports
 import { Jumbotron } from "../components/jumbotron";
 import ErrorMessage from "../components/signup/errorMessages";
 import { useGlobalStateStore } from "../store/globalContext";
-import { useObserver } from "mobx-react";
+import more from "../assets/images/more.svg";
 
 //variable to hold custom scoped styled sheet using "styled component" component
 const Styles = styled.div`
@@ -91,6 +91,7 @@ const Styles = styled.div`
 
 //function to dynamically render event cards
 const Home = ({ cards, refreshEventsData }) => {
+  //state hooks
   const [modalShow, setModalShow] = useState(false);
   const [event, setEvent] = useState({ eventData: { name: "" } });
 
@@ -106,6 +107,7 @@ const Home = ({ cards, refreshEventsData }) => {
               ) : (
                 <center>
                   <Row xs={1} sm={2} md={2} xl={5} lg={3}>
+                    {/* mapping received events data from backends onto dynamically generated card views  */}
                     {cards.map((event, key) => {
                       let seatsRemaining =
                         event.room_capacity - event.current_seat_number;
@@ -129,10 +131,6 @@ const Home = ({ cards, refreshEventsData }) => {
                                 width: "16rem",
                                 border: 0,
                                 marginBottom: "18px",
-                                // backgroundColor: "#342828",
-
-                                // color: "#C0AFAF",
-                                // opacity: "0.4",
                               }}
                               key={key}
                             >
@@ -168,6 +166,7 @@ const Home = ({ cards, refreshEventsData }) => {
                                 <small className="font-weight-bold">
                                   {`${seatsRemaining} `} seats remaining
                                 </small>
+                                {/* Popup view component to show more event details when the user hovers on more icon */}
                                 <OverlayTrigger
                                   trigger="hover"
                                   placement="auto"
@@ -259,7 +258,6 @@ const MyVerticallyCenteredModal = (props) => {
   });
 
   let event = { ...props };
-  // console.log(`the props are: ${event.eventData.name}`);
 
   //function to handle event booking form submission
   const onSubmit = async (data, e) => {
@@ -289,6 +287,7 @@ const MyVerticallyCenteredModal = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        //onSuccess
         //interactive display on successful/unsuccessful booking of an event
         if (data.status === true) {
           e.target.reset();
@@ -297,9 +296,11 @@ const MyVerticallyCenteredModal = (props) => {
           //alert the user that event booking has been a success
           swal("Success", "Event booked successfully", "success");
         } else {
+          //onFailed Booking
+          event.displayModal(false);
           swal(
             "Error",
-            `unsuccessful event booking: ${data["error-message"]}`,
+            `unsuccessful event booking: ${data["message"]}`,
             "warning",
             {
               buttons: {
@@ -311,16 +312,20 @@ const MyVerticallyCenteredModal = (props) => {
         console.log("Success", data);
       })
       .catch((error) => {
-        swal("Error", "Event booking failed, please retry", "warning");
+        //onError
+        event.displayModal(false);
+        swal("Error", "Failed to book event, please retry", "warning");
         console.error("Error:", error);
       });
   };
 
+  //function to run and set defaulr data whenever this component is run
   useEffect(() => {
     let id = event.eventData.id;
     setValue("event_id", id);
   });
 
+  //making component aware and listen to global state
   return useObserver(() => (
     <Modal
       {...props}

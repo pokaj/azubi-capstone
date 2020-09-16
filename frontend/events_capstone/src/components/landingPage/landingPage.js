@@ -1,8 +1,12 @@
+//dependencies imports
 import React, { useState } from "react";
+
+//module imports
 import LoginForm from "../login/LoginForm";
 import RegistrationForm from "../signup/registration_form";
 import "./styles.css";
 
+//landing/welcome page component
 const LandingPage = () => {
   return (
     <div className="loginout-layout">
@@ -11,9 +15,11 @@ const LandingPage = () => {
   );
 };
 
+//conatainer to hold welcome component
 const WELCOMECOMPONENT = () => {
   const [choice, setChoice] = useState("");
 
+  //functions to display selected coponent on screen
   const logInHandler = () => setChoice("LOGIN");
   const logRegisterHandler = () => setChoice("REGISTER");
   const welcome = (
@@ -50,6 +56,7 @@ const WELCOMECOMPONENT = () => {
   );
   let next = "";
 
+  //checks which choice was chosen and displays the respective component
   if (choice === "") {
     next = welcome;
   }

@@ -1,12 +1,15 @@
+//dependencies import
 import React from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import swal from "sweetalert";
 import axios from "axios";
-
 import Styled from "styled-components";
+
+//module imports
 import { useGlobalStateStore } from "../store/globalContext";
 
+//scoped component css
 const Styles = Styled.div`
 
 .navbar {
@@ -25,11 +28,11 @@ const Styles = Styled.div`
     color: #bbb;
 }
 
-
-
 `;
 
+//Navigation bar component
 const NavigationBar = () => {
+  //calling global userData state
   const globalStateStore = useGlobalStateStore();
 
   //handles user logout for both frontend and backend upon click of logout button
@@ -46,57 +49,30 @@ const NavigationBar = () => {
     }
     formBody = formBody.join("&");
 
-    const myHeaders = new Headers();
-    myHeaders.append(
-      "Content-Type",
-      "application/x-www-form-urlencoded;charset=UTF-8"
-    );
-    myHeaders.append("Token", `${globalStateStore.currentUserData.token}`);
-
     try {
+      //logging user out from backend for securty reasons
       axios({
         method: "post",
         url: url,
         data: formBody,
         headers: {
           "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-          // Token: globalStateStore.currentUserData.token,
           Authorization: `Token ${globalStateStore.currentUserData.token}`,
         },
       })
         .then(function (response) {
-          //success
+          //onsuccess
           globalStateStore.onLogOut();
           swal("Success", "You're logged out", "success");
         })
         .catch(function (response) {
-          // on failed loggout error
+          // onError
           swal("Error", "Failed to logout, please retry", "warning");
           console.log(response);
         });
-    } catch (e) {}
-
-    // fetch(url, {
-    //   method: "POST",
-    //   mode: "cors",
-    //   headers: myHeaders,
-    //   body: formBody,
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     //interactive display(alerts) on successful/unsuccessful user loginout attempt
-
-    //     swal("Success", "You're logged out", "success");
-
-    //     console.log("success", data);
-    //   })
-    //   .catch((error) => {
-    //     swal("Success", "You're logged out", "success");
-    //     globalDispatch({ type: "LOGOUT" });
-
-    //     // swal("Error", "Failed to logout, please retry", "warning");
-    //     console.error("Error:", error);
-    //   });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

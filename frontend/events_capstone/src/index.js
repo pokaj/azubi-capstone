@@ -1,18 +1,16 @@
+//dependency imports
 import React from "react";
 import ReactDOM from "react-dom";
+import * as serviceWorker from "./serviceWorker";
+
+//module imports
 import { GlobalStateProvider } from "./store/globalContext";
 import "./index.css";
 import { App } from "./App";
-import * as serviceWorker from "./serviceWorker";
-
-// import $ from "jquery";
-
-// $(".message a").click(function () {
-//   $("form").animate({ height: "toggle", opacity: "toggle" }, "slow");
-// });
 
 ReactDOM.render(
   <React.StrictMode>
+    {/* Wrapping Highest level component with with MobX global state provider to pass state down  */}
     <GlobalStateProvider>
       <App />
     </GlobalStateProvider>
