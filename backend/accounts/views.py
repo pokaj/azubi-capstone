@@ -233,12 +233,12 @@ class myeventsAPI(generics.GenericAPIView):
                     'message': 'An error occurred'
                 })
 
-class totaleventsAPI(generics.GenericAPIView):
+# class totaleventsAPI(generics.GenericAPIView):
 
-    def post(self, request, format=None):
-        events = Event.objects.all()
-        count = events.__len__()
-        return Response(count)
+#     def post(self, request, format=None):
+#         events = Event.objects.all()
+#         count = events.__len__()
+#         return Response(count)
 
 
 class registeredAPI(generics.GenericAPIView):
