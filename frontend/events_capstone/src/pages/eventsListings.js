@@ -1,11 +1,14 @@
+//Dependencies imports
 import React, { Component } from "react";
 import { Table } from "react-bootstrap";
 import styled from "styled-components";
 
+//scopred css for component
 const Styles = styled.div`
   h2 {
     margin: auto;
     text-align: center;
+    color: white;
   }
   .table {
     width: 90%;
@@ -34,6 +37,7 @@ const EventsListingsTable = ({ events }) => {
             </tr>
           </thead>
           <tbody>
+            {/* collects events data and maps them into new table rows */}
             {events.map((event) => {
               let seatsRemaining =
                 event.room_capacity - event.current_seat_number;
@@ -60,7 +64,7 @@ const EventsListingsTable = ({ events }) => {
   );
 };
 
-//class to render table of events
+//class to render table of events component
 class EventsListingsPage extends Component {
   constructor(props) {
     super(props);

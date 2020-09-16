@@ -4,6 +4,7 @@ import { userDataStore } from "./globalStateProvider";
 
 const GlobalContext = React.createContext(null);
 
+//global context for userData state
 export const GlobalStateProvider = ({ children }) => {
   const globalStateStore = useLocalStore(userDataStore);
   return (
@@ -13,4 +14,5 @@ export const GlobalStateProvider = ({ children }) => {
   );
 };
 
+//export for conveniece
 export const useGlobalStateStore = () => React.useContext(GlobalContext);

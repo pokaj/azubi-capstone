@@ -60,8 +60,6 @@ const MainForm = () => {
             }
           );
         }
-
-        console.log("success", data);
       })
       .catch((error) => {
         swal(

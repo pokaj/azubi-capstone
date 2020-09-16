@@ -44,10 +44,11 @@ const Styles = styled.div`
   }
 `;
 
-//jumbotron to display on the top of the home page
+//jumbotron/image to display on the top of the home page
 export const Jumbotron = () => {
   //getting global staue for login status
   // const { globalState } = useContext(Context);
+
   const globalUserState = useGlobalStateStore();
 
   return useObserver(() => (

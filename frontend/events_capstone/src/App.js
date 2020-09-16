@@ -1,6 +1,9 @@
+//dependency imports
 import React from "react";
-import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
+//module imports
+import "./App.css";
 import LandingPage from "./components/landingPage/landingPage.js";
 import HomePage from "./pages/homePage";
 import MyEventsPage from "./pages/myEvents";
@@ -8,16 +11,11 @@ import EventsListingsPage from "./pages/eventsListings";
 import NavigationBar from "./components/navigationBar";
 import PageNotFound from "./pages/pageNotFound";
 import SecuredRoute from "./routes/securedRoutes";
-import "bootstrap/dist/css/bootstrap.min.css";
 
-//import dependencies to handle routing
+//dependencies handling routing
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-// const StoreContext = React.createContext();
-
 function App() {
-  //handling global state with mobx state managaement
-
   return (
     <>
       <Router>

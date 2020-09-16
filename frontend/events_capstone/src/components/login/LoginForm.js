@@ -15,7 +15,6 @@ const LoginForm = (props) => {
   const regHandler = () => setChoice("reg");
 
   //getting global staue for login status
-
   const globalUserStateStore = useGlobalStateStore();
 
   const [redirect, setRedirect] = useState({ status: false });
@@ -46,16 +45,15 @@ const LoginForm = (props) => {
       .then((data) => {
         //interactive display on successful/unsuccessful user login
         if (data.status === true) {
+          //onSuccess
           e.target.reset();
           //redirect to homepage once login is successful
-          globalUserStateStore.onLogIn();
           globalUserStateStore.addCurrentUserData(data);
-          console.log(
-            "login state data is:",
-            globalUserStateStore.currentUserData
-          );
+          globalUserStateStore.onLogIn();
+
           setRedirect({ status: true });
         } else {
+          //onFailed
           swal(
             "Error",
             `unsuccessful login: ${data["error-message"]}`,
@@ -70,12 +68,13 @@ const LoginForm = (props) => {
         console.log("Success", data);
       })
       .catch((error) => {
+        //sonError
         swal("Error", "Login failure, please retry", "warning");
         console.error("Error:", error);
       });
   };
 
-  //Form begins here
+  //Login Form Component
   const form = (
     <div className="backgroundbg">
       <div className="login-page">
@@ -120,10 +119,12 @@ const LoginForm = (props) => {
       </div>
     </div>
   );
+  //reference to registration form component
   const reg = <RegistrationForm />;
   //re-routing to homepage after clicking okay on the login alert...
   if (redirect.status) return <Redirect push to="/home" />;
 
+  //dynamically pick which page to display
   return <>{choice === "" ? form : reg}</>;
 };
 

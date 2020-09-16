@@ -1,3 +1,4 @@
+//store for current User state
 function userDataStore() {
   return {
     isLoggedIn: false,
@@ -8,13 +9,20 @@ function userDataStore() {
     },
     onLogIn() {
       this.isLoggedIn = true;
+      localStorage.setItem(
+        "currentUserData",
+        JSON.stringify(this.currentUserData)
+      );
     },
     onLogOut() {
       this.isLoggedIn = false;
+      localStorage.setItem("currentUserData", JSON.stringify({}));
       this.currentUserData = {};
     },
   };
 }
+
+//store for allEvents state
 
 function allEventsStore() {
   return {
@@ -31,6 +39,8 @@ function allEventsStore() {
     },
   };
 }
+
+//store for current User Events state
 
 function myEventsStore() {
   return {
@@ -50,4 +60,5 @@ function myEventsStore() {
   };
 }
 
+//exporting various stores
 export { userDataStore, allEventsStore, myEventsStore };
