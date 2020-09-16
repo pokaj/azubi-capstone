@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions, viewsets
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, EventSerializer, EventAttendeesSerializer
+from .serializers import UserSerializer, RegisterSerializer, EventSerializer, EventAttendeesSerializer, Userserializer
 from django.contrib.auth import login
 from rest_framework import permissions
 from rest_framework.authtoken.serializers import AuthTokenSerializer
@@ -17,6 +17,7 @@ from django.db.models import F
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import logout
+from itertools import chain
 
 # REGISTER API
 # This API allows users to create their accounts.
@@ -224,9 +225,28 @@ class myeventsAPI(generics.GenericAPIView):
                 myevents = EventAttendee.objects.filter(
                     attendee__email=user_email)
                 serializer = EventAttendeesSerializer(myevents, many=True)
-                return Response(serializer.data)
+                event_count = serializer.data.__len__()
+                return Response({'count':event_count, 'data':serializer.data})
             except:
                 return Response({
                     'status': False,
                     'message': 'An error occurred'
                 })
+
+class totaleventsAPI(generics.GenericAPIView):
+
+    def post(self, request, format=None):
+        events = Event.objects.all()
+        count = events.__len__()
+        return Response(count)
+
+
+class registeredAPI(generics.GenericAPIView):
+    serializer_class = EventSerializer 
+
+    def post(self, request, format=None):
+        events = Event.objects.all();
+        serializer = EventSerializer(events, many=True)
+        return Response(serializer.data)
+
+
