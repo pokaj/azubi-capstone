@@ -168,7 +168,7 @@ const Home = ({ cards, refreshEventsData }) => {
                                 </small>
                                 {/* Popup view component to show more event details when the user hovers on more icon */}
                                 <OverlayTrigger
-                                  trigger="hover"
+                                  trigger={["hover", "focus"]}
                                   placement="auto"
                                   overlay={
                                     <Popover id="popover-basic">
@@ -301,7 +301,7 @@ const MyVerticallyCenteredModal = (props) => {
           swal(
             "Error",
             `unsuccessful event booking: ${data["message"]}`,
-            "warning",
+            "error",
             {
               buttons: {
                 cancel: "Close",
@@ -309,12 +309,11 @@ const MyVerticallyCenteredModal = (props) => {
             }
           );
         }
-        console.log("Success", data);
       })
       .catch((error) => {
         //onError
         event.displayModal(false);
-        swal("Error", "Failed to book event, please retry", "warning");
+        swal("Error", "Failed to book event, please retry", "error");
         console.error("Error:", error);
       });
   };
@@ -404,8 +403,6 @@ export default class HomPage extends Component {
       .then((response) => response.json())
       .then((data) => {
         this.setState({ cards: data });
-
-        console.log("success", data);
       })
       .catch((error) => {
         console.error("Error:", error);
