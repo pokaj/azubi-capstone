@@ -19,14 +19,21 @@ function App() {
   return (
     <>
       <Router>
-        <NavigationBar />
         <Switch>
-          <Route path="/" exact component={LandingPage} />
-          <SecuredRoute path="/home" component={HomePage} />
-          <SecuredRoute path="/eventsListings" component={EventsListingsPage} />
-          <SecuredRoute path="/myEventsPage" component={MyEventsPage} />
-          <Route component={PageNotFound} />
+        <Route path="/" exact component={LandingPage} />
+        <Router>
+        <NavigationBar />
+          <Switch>         
+              <SecuredRoute path="/home" component={HomePage} />
+              <SecuredRoute path="/eventsListings" component={EventsListingsPage} />
+              <SecuredRoute path="/myEventsPage" component={MyEventsPage} />
+              <Route path="/" exact component={LandingPage} />
+              <Route component={PageNotFound} />
+          </Switch>
+        </Router>
+        
         </Switch>
+                 
       </Router>
     </>
   );
