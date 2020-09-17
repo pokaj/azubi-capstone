@@ -156,7 +156,7 @@ class attendAPI(generics.GenericAPIView):
                                     )
                                 register_seat.save()
                                 Event.objects.filter(id=event.id).update(current_seat_number = F('current_seat_number') + 1)
-                                return Response({'Status':True, 'message':'Event booked'})
+                                return Response({'status':True, 'message':'Event booked'})
                             except:
                                 return Response({'status':False, 'message':'An error occurred while booking event.'})
                         else:
