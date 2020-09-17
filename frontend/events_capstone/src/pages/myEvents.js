@@ -55,8 +55,9 @@ function MyVerticallyCenteredModal(props) {
 
   const handleUnregister = (id) => {
     let url = "http://localhost:8000/api/unattend";
+    let email = globalStateStore.currentUserData.email;
 
-    let data = { event_id: id, email: globalStateStore.currentUserData.email };
+    let data = { event_id: id, email: email };
     // variable to hold converted form data
     let formBody = [];
     //loop through received data and convert it into FormData()
@@ -79,8 +80,10 @@ function MyVerticallyCenteredModal(props) {
       })
         .then(function (response) {
           //onsuccess
-          if (response.data.status == true) {
+          if (response.data.status === true) {
             props.onHide();
+            props.refreshPage();
+
             swal("Success", "You're successuly unbooked this event", "success");
           } else {
             props.onHide();
@@ -153,7 +156,12 @@ function MyVerticallyCenteredModal(props) {
 }
 
 //events page component(main page)
-const EventsPageMainComponent = ({ mEvents, uEvents, aEvents }) => {
+const EventsPageMainComponent = ({
+  mEvents,
+  uEvents,
+  aEvents,
+  refreshPage,
+}) => {
   const [modalShow, setModalShow] = useState(false);
   const [currentevent, setCurrentEvent] = useState({});
 
@@ -218,6 +226,7 @@ const EventsPageMainComponent = ({ mEvents, uEvents, aEvents }) => {
           show={modalShow}
           onHide={() => setModalShow(false)}
           currentevent={currentevent}
+          refreshPage={refreshPage}
         />
       ) : (
         <div></div>
@@ -236,7 +245,7 @@ class MyEventsPage extends Component {
     };
   }
 
-  componentDidMount() {
+  getEvents = () => {
     // variable to hold converted form data
     let formBody = [];
     let tempUserInfo = localStorage.getItem("currentUserData");
@@ -300,6 +309,9 @@ class MyEventsPage extends Component {
       .catch((error) => {
         console.error("Error:", error);
       });
+  };
+  componentDidMount() {
+    this.getEvents();
   }
 
   render() {
@@ -309,6 +321,7 @@ class MyEventsPage extends Component {
           mEvents={this.state.myEvents}
           uEvents={this.state.userEvents}
           aEvents={this.state.allEvents}
+          refreshPage={this.getEvents}
         />
       </>
     );
