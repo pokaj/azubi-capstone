@@ -193,6 +193,7 @@ class unattendAPI(generics.GenericAPIView):
                 query = EventAttendee.objects.get(
                 Q(event=event),
                 Q(attendee=attendee)).delete()
+                Event.objects.filter(id=event.id).update(current_seat_number = F('current_seat_number') - 1)
                 return Response({
                     'status':True,
                     'message':'Successfully unregistered for event'
@@ -226,6 +227,7 @@ class myeventsAPI(generics.GenericAPIView):
                     attendee__email=user_email)
                 serializer = EventAttendeesSerializer(myevents, many=True)
                 event_count = serializer.data.__len__()
+
                 return Response({'count':event_count, 'data':serializer.data})
             except:
                 return Response({
