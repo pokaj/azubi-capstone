@@ -56,7 +56,7 @@ function MyVerticallyCenteredModal(props) {
   const handleUnregister = (id) => {
     let url = "http://localhost:8000/api/unattend";
 
-    let data = { event_id: id, email: globalStateStore.currentUserData.id };
+    let data = { event_id: id, email: globalStateStore.currentUserData.email };
     // variable to hold converted form data
     let formBody = [];
     //loop through received data and convert it into FormData()
