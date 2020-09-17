@@ -67,7 +67,7 @@ const NavigationBar = () => {
         })
         .catch(function (response) {
           // onError
-          swal("Error", "Failed to logout, please retry", "warning");
+          swal("Error", "Failed to logout, please retry", "error");
           console.log(response);
         });
     } catch (e) {

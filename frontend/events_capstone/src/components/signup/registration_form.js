@@ -52,7 +52,7 @@ const MainForm = () => {
           swal(
             "Error",
             `Your registration was unsuccessful: ${data["error-message"]}`,
-            "warning",
+            "error",
             {
               buttons: {
                 cancel: "Close",
@@ -65,7 +65,7 @@ const MainForm = () => {
         swal(
           "Error",
           "Your registration was unsuccessful, please retry",
-          "warning"
+          "error"
         );
         console.error("Error:", error);
       });

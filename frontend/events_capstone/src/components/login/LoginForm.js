@@ -57,7 +57,7 @@ const LoginForm = (props) => {
           swal(
             "Error",
             `unsuccessful login: ${data["error-message"]}`,
-            "warning",
+            "error",
             {
               buttons: {
                 cancel: "Close",
@@ -69,7 +69,7 @@ const LoginForm = (props) => {
       })
       .catch((error) => {
         //sonError
-        swal("Error", "Login failure, please retry", "warning");
+        swal("Error", "Login failure, please retry", "error");
         console.error("Error:", error);
       });
   };
