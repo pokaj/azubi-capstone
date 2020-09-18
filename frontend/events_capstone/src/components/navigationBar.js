@@ -90,6 +90,15 @@ const NavigationBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
+            {globalStateStore.currentUserData.username === "group-one" ? (
+              <Nav.Item>
+                <NavLink className="nav-link" to="/adminDashBoard">
+                  Admin
+                </NavLink>
+              </Nav.Item>
+            ) : (
+              <></>
+            )}
             <Nav.Item>
               <NavLink className="nav-link" to="/home">
                 Home
@@ -105,11 +114,16 @@ const NavigationBar = () => {
                 My Events
               </NavLink>
             </Nav.Item>
-            <Nav.Item>
-              <NavLink className="nav-link" to="/profilePage">
-                Profile
-              </NavLink>
-            </Nav.Item>
+            {globalStateStore.currentUserData.username === "group-one" ? (
+              <></>
+            ) : (
+              <Nav.Item>
+                <NavLink className="nav-link" to="/profilePage">
+                  Profile
+                </NavLink>
+              </Nav.Item>
+            )}
+
             <Nav.Item>
               <NavLink
                 onClick={() =>

@@ -214,6 +214,9 @@ const EventsPageMainComponent = ({
                     <h4>
                       You can edit events you've registered for from here.
                     </h4>
+                    <h3>
+                      You are currently registred for {mEvents.count} events
+                    </h3>
                     <Link to="/home">
                       <Button className="btn-secondary">All Events</Button>
                     </Link>

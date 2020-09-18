@@ -60,15 +60,30 @@ const Styles = styled.div`
   .item2 .item3 .item4 .item5 .item6 .grid-item {
     padding: 0;
     margin: 0;
-    width: 20%;
+    // width: 20%;
   }
 
   .image-slider {
     border-raduis: 15px;
-    width: 80%%;
+    width: 60vw;
+    min-width: 67vw;
     height: 55vh;
     padding: 0;
     margin: 0;
+  }
+
+  .carousel
+    .carousel-inner
+    .active
+    .slide
+    .item2
+    .carousel-item
+    ol
+    li
+    .carousel-indicators {
+    width: 50vw;
+    min-width: 50vw;
+    border-radius: 15px;
   }
 `;
 
@@ -89,26 +104,33 @@ const ControlledCarousel = ({ userevents }) => {
 
           return (
             <Carousel.Item key={key}>
-              <div>
-                <img
-                  className="d-block w-100 image-slider"
-                  rounded
-                  src={image}
-                  alt="First slide"
-                />
+              <div className="overlay1">
+                <div className="overlay2">
+                  <img
+                    className="d-block w-100 image-slider"
+                    rounded
+                    src={event.image}
+                    alt="First slide"
+                  />
+                </div>
               </div>
 
               <Carousel.Caption>
-                <h3>First slide label</h3>
-                <p>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
+                <h3>
+                  <b>{event.name}</b>
+                </h3>
+                <p>{event.topic}</p>
               </Carousel.Caption>
             </Carousel.Item>
           );
         })
       ) : (
-        <Image className="image-slider" rounded src={image} alt="First slide" />
+        <Image
+          className="image-slider"
+          style={{ borderRadius: "15px" }}
+          src={image}
+          alt="First slide"
+        />
       )}
     </Carousel>
   );
@@ -194,7 +216,10 @@ const DashBoard = ({ allevents, getevents, userevents, myevents }) => {
         <center>
           <div className="grid-container">
             <div className="item2 grid-item">
-              <ControlledCarousel userevents={userevents} />
+              <ControlledCarousel
+                userevents={userevents}
+                style={{ width: "400px !important" }}
+              />
             </div>
             <div grid-item className="item3 grid-item">
               <Mycard
@@ -351,9 +376,9 @@ class UserDashBoard extends Component {
     this.getData();
   }
 
-  componentWillUnmount() {
-    controller.abort();
-  }
+  // componentWillUnmount() {
+  //   controller.abort();
+  // }
 
   render() {
     return (

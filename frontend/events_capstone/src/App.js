@@ -11,6 +11,7 @@ import EventsListingsPage from "./pages/eventsListings";
 import PageNotFound from "./pages/pageNotFound";
 import SecuredRoute from "./routes/securedRoutes";
 import ProfilePage from "./pages/userDashBoard";
+import AdminDashBoard from "./pages/adminDashBoard";
 
 //dependencies handling routing
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -20,6 +21,7 @@ function App() {
     <>
       <Router>
         <Switch>
+          <SecuredRoute path="/adminDashBoard" component={AdminDashBoard} />
           <SecuredRoute path="/home" component={HomePage} />
           <SecuredRoute path="/eventsListings" component={EventsListingsPage} />
           <SecuredRoute path="/myEventsPage" component={MyEventsPage} />
