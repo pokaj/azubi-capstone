@@ -1,5 +1,5 @@
 //dependencies imports
-import React, { useState, useEffect, Component } from "react";
+import React, { useState, Component } from "react";
 import {
   Container,
   Col,
@@ -23,12 +23,14 @@ const Styles = styled.div`
   @import url("https://fonts.googleapis.com/css2?family=Arvo:ital,wght@1,700&display=swap");
   @import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700;800&display=swap");
 
-  .jumboOverlay {
+  .jumbo {
     background: url(${bg}) no-repeat fixed bottom;
     background-size: cover;
     margin-top: 20px;
     height: 400px;
     color: white;
+  }
+  .jumbo-text-overlay {
   }
   h1,
   h2,
@@ -46,6 +48,34 @@ const Styles = styled.div`
   .nanum {
     font-family: "Nanum Gothic", sans-serif;
   }
+
+  // .overlay-left-right {
+  //   background: rgb(52, 52, 52);
+  //   background: linear-gradient(
+  //     270deg,
+  //     rgba(52, 52, 52, 1) 0%,
+  //     rgba(52, 52, 52, 0.6026785714285714) 4%,
+  //     rgba(50, 50, 50, 0.6026785714285714) 97%,
+  //     rgba(50, 50, 50, 1) 100%
+  //   );
+
+  //   width: 100%;
+  //   height: 100%;
+  // }
+
+  // .overlay-bottom-top {
+  //   background: rgb(52, 52, 52);
+  //   background: linear-gradient(
+  //     270deg,
+  //     rgba(52, 52, 52, 1) 0%,
+  //     rgba(52, 52, 52, 0.6026785714285714) 4%,
+  //     rgba(50, 50, 50, 0.6026785714285714) 97%,
+  //     rgba(50, 50, 50, 1) 100%
+  //   );
+
+  //   width: 100%;
+  //   height: 100%;
+  // }
 `;
 
 //modal component
@@ -165,10 +195,6 @@ const EventsPageMainComponent = ({
   const [modalShow, setModalShow] = useState(false);
   const [currentevent, setCurrentEvent] = useState({});
 
-  const [myEvents, setMyEvents] = useState({ count: 0, data: [] });
-  const [allEvents, setAllEvents] = useState([]);
-  const [userEvents, setUserEvents] = useState([]);
-
   //global state
   const globalStateStore = useGlobalStateStore();
 
@@ -177,15 +203,23 @@ const EventsPageMainComponent = ({
       <Styles>
         <div>
           <Container style={{ width: "85%" }} fluid>
-            <Jumbotron className="jumboOverlay">
-              <h1>
-                Welcome {globalStateStore.currentUserData.username}, this is
-                your dashboard
-              </h1>
-              <h4>You can edit events you've registered for from here.</h4>
-              <Link to="/home">
-                <Button className="btn-secondary">All Events</Button>
-              </Link>
+            <Jumbotron className="jumbo">
+              <div className="overlay-left-right">
+                <div className="overlay-bottom-top">
+                  <div className="jumbo-text-overlay">
+                    <h1>
+                      Welcome {globalStateStore.currentUserData.username}, this
+                      is your dashboard
+                    </h1>
+                    <h4>
+                      You can edit events you've registered for from here.
+                    </h4>
+                    <Link to="/home">
+                      <Button className="btn-secondary">All Events</Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </Jumbotron>
             <Row
               xs={1}

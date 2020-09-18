@@ -103,22 +103,17 @@ const Home = ({ cards, refreshEventsData }) => {
           <Container fluid className="homeBgImg">
             <div className="container-fluid">
               {cards.length === 0 ? (
-                <div>Sorry there are currently no events available...</div>
+                <div>Sorry there are currently no event available...</div>
               ) : (
                 <center>
                   <Row xs={1} sm={2} md={2} xl={5} lg={3}>
                     {/* mapping received events data from backends onto dynamically generated card views  */}
                     {cards.map((event, key) => {
+                      console.log("image link:", event.image);
                       let seatsRemaining =
                         event.room_capacity - event.current_seat_number;
                       return (
-                        <div
-                          key={key}
-                          onClick={() => {
-                            setEvent({ eventData: event });
-                            setModalShow(true);
-                          }}
-                        >
+                        <div key={key}>
                           <Col
                             style={{
                               width: "16rem",
@@ -135,6 +130,10 @@ const Home = ({ cards, refreshEventsData }) => {
                               key={key}
                             >
                               <Card.Img
+                                onClick={() => {
+                                  setEvent({ eventData: event });
+                                  setModalShow(true);
+                                }}
                                 variant="top"
                                 src={event.image}
                                 style={{ height: "220px" }}
@@ -318,7 +317,7 @@ const MyVerticallyCenteredModal = (props) => {
       });
   };
 
-  //function to run and set defaulr data whenever this component is run
+  //function to run and set default data whenever this component is run
   useEffect(() => {
     let id = event.eventData.id;
     setValue("event_id", id);

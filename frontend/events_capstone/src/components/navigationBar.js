@@ -11,9 +11,11 @@ import { useGlobalStateStore } from "../store/globalContext";
 
 //scoped component css
 const Styles = Styled.div`
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap');
 
 .navbar {
     background-color: #222;
+    
   }
 
   a, .navbar-brand, .navbar-nav .nav-link {
@@ -21,12 +23,18 @@ const Styles = Styled.div`
     &:hover {
       color: white;
     }
+
+    font-family: 'Quicksand', sans-serif;
     
   }
 
   .navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
     color: #bbb;
+
+    font-family: 'Quicksand', sans-serif;
 }
+
+
 
 `;
 
@@ -95,6 +103,11 @@ const NavigationBar = () => {
             <Nav.Item>
               <NavLink className="nav-link" to="/myEventsPage">
                 My Events
+              </NavLink>
+            </Nav.Item>
+            <Nav.Item>
+              <NavLink className="nav-link" to="/profilePage">
+                Profile
               </NavLink>
             </Nav.Item>
             <Nav.Item>

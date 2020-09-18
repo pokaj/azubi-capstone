@@ -2,9 +2,23 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import _ from "lodash";
+import NavigationBar from "../components/navigationBar";
 
 //modules imports
 import { useGlobalStateStore } from "../store/globalContext";
+import Styled from "styled-components";
+
+//scoped component css
+const Styles = Styled.div`
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap');
+
+
+.font-theme {
+
+  font-family: 'Quicksand', sans-serif;
+}
+
+`;
 
 //component secures private routes from unauthenticated user access
 function SecuredRoute(props) {
@@ -23,16 +37,19 @@ function SecuredRoute(props) {
 
   //returns specified route is user is authoried else sends user back to login screen
   return (
-    <Route
-      path={props.path}
-      render={(data) =>
-        globalStateStore.isLoggedIn ? (
-          <props.component {...data}></props.component>
-        ) : (
-          <Redirect to={{ pathname: "/" }}></Redirect>
-        )
-      }
-    ></Route>
+    <Styles>
+      <NavigationBar className="font-theme" />
+      <Route
+        path={props.path}
+        render={(data) =>
+          globalStateStore.isLoggedIn ? (
+            <props.component {...data}></props.component>
+          ) : (
+            <Redirect to={{ pathname: "/" }}></Redirect>
+          )
+        }
+      ></Route>
+    </Styles>
   );
 }
 

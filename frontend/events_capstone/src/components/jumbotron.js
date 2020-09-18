@@ -56,7 +56,7 @@ export const Jumbotron = () => {
         <div className="overlay"></div>
         <Container fluid>
           <h1>Welcome {globalUserState.currentUserData.username}</h1>
-          <h5>Click on an event to register for it</h5>
+          <h5>Click on an event's image to register for it</h5>
         </Container>
       </Jumbo>
     </Styles>

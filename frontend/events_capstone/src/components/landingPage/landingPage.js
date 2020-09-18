@@ -1,5 +1,5 @@
 //dependencies imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 //module imports
 import LoginForm from "../login/LoginForm";
@@ -17,6 +17,14 @@ const LandingPage = () => {
 
 //conatainer to hold welcome component
 const WELCOMECOMPONENT = () => {
+  const refreshPageToRemoveNavBar = () => {
+    return null;
+  };
+
+  useEffect(() => {
+    refreshPageToRemoveNavBar();
+  }, []);
+
   const [choice, setChoice] = useState("");
 
   //functions to display selected coponent on screen
