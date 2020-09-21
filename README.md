@@ -6,7 +6,8 @@ This is an events booking platform, it's a web based application built on react 
 
 ## Installation
 - Clone the repo in your terminal by clicking the _green_ clone or download button at the top right and copying the url
-- In your terminal, type ```git clone URL```
+- In your terminal, type ```cd frontend/events_capstonr``` and hit enter
+- Type ```git clone URL```
   - replace URL with the url you copied
   - hit enter
 - This will copy all the files from this repo down to your computer
