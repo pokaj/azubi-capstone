@@ -253,52 +253,54 @@ const DashBoard = ({ allevents, getevents, userevents, myevents }) => {
             </div>
           </div>
         </center>
-        <Row>
-          <h2>All Events Details</h2>
-        </Row>
-        <Row>
-          <Table striped bordered hover variant="dark">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Location</th>
-                <th>Speaker(s)</th>
-                <th>Tag</th>
-                <th>Date</th>
-                <th>Begins At</th>
-                <th>Ends At</th>
-                <th>Room Capacity</th>
-                <th>Seats Remaining</th>
-                <th>
-                  N<u>o</u> of Registered Users
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* collects events data and maps them into new table rows */}
-              {allevents.map((event) => {
-                let seatsRemaining =
-                  event.room_capacity - event.current_seat_number;
-                return (
-                  <>
-                    <tr>
-                      <td>{event.name}</td>
-                      <td>{event.location}</td>
-                      <td>{event.speaker}</td>
-                      <td>{event.tagline}</td>
-                      <td>{event.date}</td>
-                      <td>{event.start_time}</td>
-                      <td>{event.end_time}</td>
-                      <td>{event.room_capacity}</td>
-                      <td>{seatsRemaining}</td>
-                      <td>{event.attendees.length}</td>
-                    </tr>
-                  </>
-                );
-              })}
-            </tbody>
-          </Table>
-        </Row>
+        <div style={{ height: "45vh" }}>
+          <Row>
+            <h2>All Events Details</h2>
+          </Row>
+          <Row>
+            <Table striped bordered hover variant="dark">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Location</th>
+                  <th>Speaker(s)</th>
+                  <th>Tag</th>
+                  <th>Date</th>
+                  <th>Begins At</th>
+                  <th>Ends At</th>
+                  <th>Room Capacity</th>
+                  <th>Seats Remaining</th>
+                  <th>
+                    N<u>o</u> of Registered Users
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* collects events data and maps them into new table rows */}
+                {allevents.map((event) => {
+                  let seatsRemaining =
+                    event.room_capacity - event.current_seat_number;
+                  return (
+                    <>
+                      <tr>
+                        <td>{event.name}</td>
+                        <td>{event.location}</td>
+                        <td>{event.speaker}</td>
+                        <td>{event.tagline}</td>
+                        <td>{event.date}</td>
+                        <td>{event.start_time}</td>
+                        <td>{event.end_time}</td>
+                        <td>{event.room_capacity}</td>
+                        <td>{seatsRemaining}</td>
+                        <td>{event.attendees.length}</td>
+                      </tr>
+                    </>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </Row>
+        </div>
       </Container>
     </Styles>
   );
