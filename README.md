@@ -2,7 +2,7 @@
 
 ## Description
 
-This is an events booking platform, it's a web based application built on react that helps users far and wide upon registration login and to book for events made available by the admin. Users who wish to upload their upcoming events may do so by providing the details to the admin which upon validation is uploaded for various users to register for. There are a plethora of features available for users on this platform which can be explored through this: https://azubi-capstone.azurewebsites.net/# url.
+This is an events booking platform, it's a web based application built on react that helps users far and wide upon registration login and to book for events made available by the admin. Users who wish to upload their upcoming events may do so by providing the details to the admin which upon validation is uploaded for various users to register for. There are a plethora of features available for users on this platform which can be explored through this: https://azubieventsbookingplatformg1.azurewebsites.net/ url.
 
 ## Installation
 - Clone the repo in your terminal by clicking the _green_ clone or download button at the top right and copying the url
