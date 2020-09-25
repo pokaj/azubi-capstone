@@ -53,7 +53,7 @@ class RegisterAPI(generics.GenericAPIView):
 # 6. If credentials are wrong or the user does not exist, the 
 #    respective error messages are returned.
 
-class LoginAPI(KnoxLoginView):
+class LoginAPI(generics.GenericAPIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
@@ -92,6 +92,16 @@ class LoginAPI(KnoxLoginView):
                 "status":False,
                 "error-message":"user not found in database"
                 })
+
+
+class view_events(generics.GenericAPIView):
+    serializer_class = EventSerializer
+
+    def get(request):
+        if(request.method == 'GET'):
+            query = Event.objects.all()
+            serializer = EventSerializer(query, many=True)
+            return Response(serializer.data)
 
 
 class EventView(viewsets.ModelViewSet):
@@ -204,12 +214,6 @@ class unattendAPI(generics.GenericAPIView):
                 return Response({'status':False, 'message':'Sorry. An error occurred'})
 
 
-# MY EVENTS API
-# This API returns all the events a user has registered for.
-# The email of the user us required
-# 1. If a user exists with that email, all events the user has 
-#    has registered for are returned.
-
 
 class myeventsAPI(generics.GenericAPIView):
     serializer_class = EventAttendeesSerializer
@@ -235,12 +239,6 @@ class myeventsAPI(generics.GenericAPIView):
                     'message': 'An error occurred'
                 })
 
-# class totaleventsAPI(generics.GenericAPIView):
-
-#     def post(self, request, format=None):
-#         events = Event.objects.all()
-#         count = events.__len__()
-#         return Response(count)
 
 
 class registeredAPI(generics.GenericAPIView):
